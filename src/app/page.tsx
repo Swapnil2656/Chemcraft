@@ -1,103 +1,157 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import Link from 'next/link';
+import { Table, Zap, BookOpen, Star, Users, Award } from 'lucide-react';
+
+export default function HomePage() {
+  const features = [
+    {
+      icon: Table,
+      title: 'Interactive Periodic Table',
+      description: 'Explore all elements with detailed information, properties, and visual representations.',
+      href: '/periodic',
+      color: 'bg-blue-500'
+    },
+    {
+      icon: Zap,
+      title: 'Element Mixer',
+      description: 'Mix elements to create compounds and learn about chemical reactions.',
+      href: '/mixer',
+      color: 'bg-purple-500'
+    },
+    {
+      icon: BookOpen,
+      title: 'Chemistry Quiz',
+      description: 'Test your knowledge with interactive quizzes covering all chemistry topics.',
+      href: '/quiz',
+      color: 'bg-green-500'
+    }
+  ];
+
+  const stats = [
+    { icon: Star, value: '118', label: 'Elements' },
+    { icon: Zap, value: '100+', label: 'Compounds' },
+    { icon: Award, value: '500+', label: 'Quiz Questions' }
+  ];
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-3xl"></div>
+        <div className="relative z-10 py-20 px-8 text-center">
+          <div>
+            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6">
+              Welcome to{' '}
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                ChemCraft
+              </span>
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+              Your interactive chemistry learning companion. Explore the periodic table, 
+              mix elements, and master chemistry through engaging quizzes and experiments.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/periodic"
+                className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold"
+              >
+                Explore Periodic Table
+              </Link>
+              <Link
+                href="/quiz"
+                className="px-8 py-3 bg-transparent border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg font-semibold"
+              >
+                Take a Quiz
+              </Link>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Features
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300">
+            Everything you need to master chemistry
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {features.map((feature, index) => {
+            const Icon = feature.icon;
+            return (
+              <div key={feature.title}>
+                <Link href={feature.href}>
+                  <div className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg hover:shadow-xl cursor-pointer group">
+                    <div className={`w-16 h-16 ${feature.color} rounded-lg flex items-center justify-center mb-6`}>
+                      <Icon className="h-8 w-8 text-white" />
+                    </div>
+                    <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      {feature.description}
+                    </p>
+                  </div>
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-20 bg-white/50 dark:bg-gray-800/50 rounded-3xl">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            By the Numbers
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300">
+            Join thousands of students learning chemistry
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {stats.map((stat, index) => {
+            const Icon = stat.icon;
+            return (
+              <div key={stat.label} className="text-center">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mb-4">
+                  <Icon className="h-8 w-8 text-white" />
+                </div>
+                <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                  {stat.value}
+                </div>
+                <div className="text-gray-600 dark:text-gray-300">
+                  {stat.label}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 text-center">
+        <div>
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Ready to Start Learning?
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+            Join thousands of students who are mastering chemistry with ChemCraft
+          </p>
+          <Link
+            href="/periodic"
+            className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700"
+          >
+            Get Started Now
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

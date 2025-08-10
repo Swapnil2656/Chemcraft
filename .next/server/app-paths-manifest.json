@@ -1,0 +1,10 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/favorites/page": "app/favorites/page.js",
+  "/quiz/page": "app/quiz/page.js",
+  "/periodic/page": "app/periodic/page.js",
+  "/mixer/page": "app/mixer/page.js",
+  "/sign-in/[[...sign-in]]/page": "app/sign-in/[[...sign-in]]/page.js",
+  "/sign-up/[[...sign-up]]/page": "app/sign-up/[[...sign-up]]/page.js",
+  "/page": "app/page.js"
+}

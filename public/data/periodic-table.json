@@ -1,0 +1,48 @@
+{
+  "elements": [
+    {
+      "atomicNumber": 1,
+      "symbol": "H",
+      "name": "Hydrogen",
+      "atomicWeight": 1.008,
+      "category": "nonmetals",
+      "period": 1,
+      "group": 1,
+      "block": "s",
+      "electronConfiguration": "1s¹",
+      "description": "The lightest and most abundant element in the universe.",
+      "discoveredBy": "Henry Cavendish",
+      "discoveredYear": 1766,
+      "color": "#FFFFFF",
+      "phase": "gas",
+      "density": 0.08988,
+      "meltingPoint": -259.16,
+      "boilingPoint": -252.87,
+      "electronegativity": 2.20,
+      "ionizationEnergy": 1312,
+      "properties": ["Flammable", "Colorless", "Odorless", "Tasteless"],
+      "uses": ["Fuel", "Ammonia production", "Hydrogenation", "Rocket fuel"]
+    },
+    {
+      "atomicNumber": 2,
+      "symbol": "He",
+      "name": "Helium",
+      "atomicWeight": 4.003,
+      "category": "noble-gases",
+      "period": 1,
+      "group": 18,
+      "block": "s",
+      "electronConfiguration": "1s²",
+      "description": "Second most abundant element in the universe, chemically inert.",
+      "discoveredBy": "Pierre Janssen",
+      "discoveredYear": 1868,
+      "color": "#D9FFFF",
+      "phase": "gas",
+      "density": 0.1786,
+      "meltingPoint": -272.2,
+      "boilingPoint": -268.93,
+      "properties": ["Inert", "Colorless", "Odorless", "Tasteless"],
+      "uses": ["Balloons", "Welding", "Breathing gas", "Cryogenics"]
+    }
+  ]
+}

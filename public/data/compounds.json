@@ -1,0 +1,632 @@
+{
+  "Hydrogen+Oxygen": {
+    "elements": ["Hydrogen", "Oxygen"],
+    "formula": "H₂O",
+    "name": "Water",
+    "properties": {
+      "state": "Liquid at STP",
+      "melting_point": "0 °C",
+      "boiling_point": "100 °C",
+      "density": "1 g/cm³"
+    },
+    "uses": [
+      "Drinking water",
+      "Industrial coolant",
+      "Agriculture",
+      "Chemical reactions"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Water",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/962"
+    }
+  },
+  "Hydrogen+Chlorine": {
+    "elements": ["Hydrogen", "Chlorine"],
+    "formula": "HCl",
+    "name": "Hydrochloric acid",
+    "properties": {
+      "state": "Gas at STP",
+      "melting_point": "-114.17 °C",
+      "boiling_point": "-85.05 °C",
+      "density": "1.49 g/L"
+    },
+    "uses": [
+      "Chemical synthesis",
+      "Metal cleaning",
+      "Food processing",
+      "pH adjustment"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Hydrogen_chloride",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/313"
+    }
+  },
+  "Aluminum+Chlorine": {
+    "elements": ["Aluminum", "Chlorine"],
+    "formula": "AlCl₃",
+    "name": "Aluminum chloride",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "192.4 °C",
+      "boiling_point": "180 °C",
+      "density": "2.48 g/cm³"
+    },
+    "uses": [
+      "Catalysts",
+      "Antiperspirants",
+      "Water treatment",
+      "Petroleum refining"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Aluminium_chloride",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/24012"
+    }
+  },
+  "Sodium+Chlorine": {
+    "elements": ["Sodium", "Chlorine"],
+    "formula": "NaCl",
+    "name": "Sodium chloride",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "801 °C",
+      "boiling_point": "1465 °C",
+      "density": "2.16 g/cm³"
+    },
+    "uses": [
+      "Food seasoning",
+      "Food preservation",
+      "De-icing roads",
+      "Chemical industry"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Sodium_chloride",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/5234"
+    }
+  },
+  "Carbon+Oxygen": {
+    "elements": ["Carbon", "Oxygen"],
+    "formula": "CO₂",
+    "name": "Carbon dioxide",
+    "properties": {
+      "state": "Gas at STP",
+      "melting_point": "-78.5 °C",
+      "boiling_point": "-78.5 °C",
+      "density": "1.98 g/L"
+    },
+    "uses": [
+      "Carbonated beverages",
+      "Fire extinguishers",
+      "Dry ice",
+      "Plant photosynthesis"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Carbon_dioxide",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/280"
+    }
+  },
+  "Iron+Oxygen": {
+    "elements": ["Iron", "Oxygen"],
+    "formula": "Fe₂O₃",
+    "name": "Iron(III) oxide",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "1566 °C",
+      "boiling_point": "Decomposes",
+      "density": "5.24 g/cm³"
+    },
+    "uses": [
+      "Pigments",
+      "Polishing compounds",
+      "Magnetic storage",
+      "Catalysts"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Iron(III)_oxide",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/518696"
+    }
+  },
+  "Carbon+Hydrogen": {
+    "elements": ["Carbon", "Hydrogen"],
+    "formula": "CH₄",
+    "name": "Methane",
+    "properties": {
+      "state": "Gas at STP",
+      "melting_point": "-182.5 °C",
+      "boiling_point": "-161.5 °C",
+      "density": "0.717 g/L"
+    },
+    "uses": [
+      "Natural gas fuel",
+      "Heating",
+      "Electricity generation",
+      "Chemical feedstock"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Methane",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/297"
+    }
+  },
+  "Nitrogen+Hydrogen": {
+    "elements": ["Nitrogen", "Hydrogen"],
+    "formula": "NH₃",
+    "name": "Ammonia",
+    "properties": {
+      "state": "Gas at STP",
+      "melting_point": "-77.7 °C",
+      "boiling_point": "-33.3 °C",
+      "density": "0.73 g/L"
+    },
+    "uses": [
+      "Fertilizers",
+      "Cleaning products",
+      "Refrigeration",
+      "Chemical synthesis"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Ammonia",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/222"
+    }
+  },
+  "Calcium+Carbon+Oxygen": {
+    "elements": ["Calcium", "Carbon", "Oxygen"],
+    "formula": "CaCO₃",
+    "name": "Calcium carbonate",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "825 °C",
+      "boiling_point": "Decomposes",
+      "density": "2.71 g/cm³"
+    },
+    "uses": [
+      "Construction materials",
+      "Paper production",
+      "Plastics",
+      "Pharmaceuticals"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Calcium_carbonate",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/10112"
+    }
+  },
+  "Sodium+Hydrogen+Carbon+Oxygen": {
+    "elements": ["Sodium", "Hydrogen", "Carbon", "Oxygen"],
+    "formula": "NaHCO₃",
+    "name": "Sodium bicarbonate",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "50 °C",
+      "boiling_point": "Decomposes",
+      "density": "2.20 g/cm³"
+    },
+    "uses": [
+      "Baking soda",
+      "Antacid",
+      "Fire extinguisher",
+      "Cleaning agent"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Sodium_bicarbonate",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/516892"
+    }
+  },
+  "Sulfur+Hydrogen+Oxygen": {
+    "elements": ["Sulfur", "Hydrogen", "Oxygen"],
+    "formula": "H₂SO₄",
+    "name": "Sulfuric acid",
+    "properties": {
+      "state": "Liquid at STP",
+      "melting_point": "10 °C",
+      "boiling_point": "337 °C",
+      "density": "1.84 g/cm³"
+    },
+    "uses": [
+      "Chemical industry",
+      "Battery acid",
+      "Fertilizer production",
+      "Metal processing"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Sulfuric_acid",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/1118"
+    }
+  },
+  "Nitrogen+Hydrogen+Oxygen": {
+    "elements": ["Nitrogen", "Hydrogen", "Oxygen"],
+    "formula": "HNO₃",
+    "name": "Nitric acid",
+    "properties": {
+      "state": "Liquid at STP",
+      "melting_point": "-42 °C",
+      "boiling_point": "83 °C",
+      "density": "1.51 g/cm³"
+    },
+    "uses": [
+      "Fertilizer production",
+      "Explosives",
+      "Metal etching",
+      "Chemical synthesis"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Nitric_acid",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/944"
+    }
+  },
+  "Sulfur+Oxygen": {
+    "elements": ["Sulfur", "Oxygen"],
+    "formula": "SO₂",
+    "name": "Sulfur dioxide",
+    "properties": {
+      "state": "Gas at STP",
+      "melting_point": "-75.5 °C",
+      "boiling_point": "-10.0 °C",
+      "density": "2.62 g/L"
+    },
+    "uses": [
+      "Food preservative",
+      "Wine production",
+      "Chemical synthesis",
+      "Bleaching"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Sulfur_dioxide",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/1119"
+    }
+  },
+  "Potassium+Chlorine": {
+    "elements": ["Potassium", "Chlorine"],
+    "formula": "KCl",
+    "name": "Potassium chloride",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "771 °C",
+      "boiling_point": "1420 °C",
+      "density": "1.98 g/cm³"
+    },
+    "uses": [
+      "Fertilizers",
+      "Food processing",
+      "Medical treatments",
+      "De-icing"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Potassium_chloride",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/4873"
+    }
+  },
+  "Aluminum+Oxygen": {
+    "elements": ["Aluminum", "Oxygen"],
+    "formula": "Al₂O₃",
+    "name": "Aluminum oxide",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "2072 °C",
+      "boiling_point": "2977 °C",
+      "density": "3.95 g/cm³"
+    },
+    "uses": [
+      "Abrasives",
+      "Ceramics",
+      "Refractories",
+      "Catalyst support"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Aluminium_oxide",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/9989226"
+    }
+  },
+  "Silicon+Oxygen": {
+    "elements": ["Silicon", "Oxygen"],
+    "formula": "SiO₂",
+    "name": "Silicon dioxide",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "1713 °C",
+      "boiling_point": "2950 °C",
+      "density": "2.65 g/cm³"
+    },
+    "uses": [
+      "Glass production",
+      "Electronics",
+      "Construction",
+      "Optical fibers"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Silicon_dioxide",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/24261"
+    }
+  },
+  "Magnesium+Oxygen": {
+    "elements": ["Magnesium", "Oxygen"],
+    "formula": "MgO",
+    "name": "Magnesium oxide",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "2852 °C",
+      "boiling_point": "3600 °C",
+      "density": "3.58 g/cm³"
+    },
+    "uses": [
+      "Refractories",
+      "Fertilizers",
+      "Medicine",
+      "Fire retardant"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Magnesium_oxide",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/14792"
+    }
+  },
+  "Copper+Oxygen": {
+    "elements": ["Copper", "Oxygen"],
+    "formula": "CuO",
+    "name": "Copper(II) oxide",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "1326 °C",
+      "boiling_point": "Decomposes",
+      "density": "6.31 g/cm³"
+    },
+    "uses": [
+      "Catalysts",
+      "Ceramics",
+      "Pigments",
+      "Batteries"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Copper(II)_oxide",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/164827"
+    }
+  },
+  "Zinc+Oxygen": {
+    "elements": ["Zinc", "Oxygen"],
+    "formula": "ZnO",
+    "name": "Zinc oxide",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "1975 °C",
+      "boiling_point": "Decomposes",
+      "density": "5.61 g/cm³"
+    },
+    "uses": [
+      "Sunscreen",
+      "Rubber",
+      "Ceramics",
+      "Pharmaceuticals"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Zinc_oxide",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/14806"
+    }
+  },
+  "Titanium+Oxygen": {
+    "elements": ["Titanium", "Oxygen"],
+    "formula": "TiO₂",
+    "name": "Titanium dioxide",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "1843 °C",
+      "boiling_point": "2972 °C",
+      "density": "4.23 g/cm³"
+    },
+    "uses": [
+      "White pigment",
+      "Sunscreen",
+      "Photocatalyst",
+      "Food coloring"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Titanium_dioxide",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/26042"
+    }
+  },
+  "Lithium+Fluorine": {
+    "elements": ["Lithium", "Fluorine"],
+    "formula": "LiF",
+    "name": "Lithium fluoride",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "848 °C",
+      "boiling_point": "1676 °C",
+      "density": "2.64 g/cm³"
+    },
+    "uses": [
+      "Optics",
+      "Ceramics",
+      "Welding flux",
+      "Batteries"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Lithium_fluoride",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/62714"
+    }
+  },
+  "Silver+Chlorine": {
+    "elements": ["Silver", "Chlorine"],
+    "formula": "AgCl",
+    "name": "Silver chloride",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "455 °C",
+      "boiling_point": "1547 °C",
+      "density": "5.56 g/cm³"
+    },
+    "uses": [
+      "Photography",
+      "Antiseptic",
+      "Electrodes",
+      "Glass"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Silver_chloride",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/24561"
+    }
+  },
+  "Gold+Chlorine": {
+    "elements": ["Gold", "Chlorine"],
+    "formula": "AuCl₃",
+    "name": "Gold(III) chloride",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "254 °C",
+      "boiling_point": "Decomposes",
+      "density": "4.7 g/cm³"
+    },
+    "uses": [
+      "Gold plating",
+      "Catalysts",
+      "Photography",
+      "Medicine"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Gold(III)_chloride",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/28133"
+    }
+  },
+  "Uranium+Fluorine": {
+    "elements": ["Uranium", "Fluorine"],
+    "formula": "UF₆",
+    "name": "Uranium hexafluoride",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "64.8 °C",
+      "boiling_point": "56.5 °C",
+      "density": "5.09 g/cm³"
+    },
+    "uses": [
+      "Uranium enrichment",
+      "Nuclear fuel",
+      "Research",
+      "Isotope separation"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Uranium_hexafluoride",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/24560"
+    }
+  },
+  "Xenon+Fluorine": {
+    "elements": ["Xenon", "Fluorine"],
+    "formula": "XeF₄",
+    "name": "Xenon tetrafluoride",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "117 °C",
+      "boiling_point": "115.7 °C",
+      "density": "4.04 g/cm³"
+    },
+    "uses": [
+      "Fluorinating agent",
+      "Research",
+      "Chemical synthesis",
+      "Etching"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Xenon_tetrafluoride",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/123324"
+    }
+  },
+  "Iron+Chlorine": {
+    "elements": ["Iron", "Chlorine"],
+    "formula": "FeCl₃",
+    "name": "Iron(III) chloride",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "307 °C",
+      "boiling_point": "315 °C",
+      "density": "2.90 g/cm³"
+    },
+    "uses": [
+      "Water treatment",
+      "Etching",
+      "Catalysts",
+      "Pigments"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Iron(III)_chloride",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/24380"
+    }
+  },
+  "Copper+Sulfur": {
+    "elements": ["Copper", "Sulfur"],
+    "formula": "CuS",
+    "name": "Copper(II) sulfide",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "1129 °C",
+      "boiling_point": "Decomposes",
+      "density": "4.76 g/cm³"
+    },
+    "uses": [
+      "Semiconductors",
+      "Solar cells",
+      "Catalysts",
+      "Pigments"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Copper(II)_sulfide",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/14831"
+    }
+  },
+  "Calcium+Chlorine": {
+    "elements": ["Calcium", "Chlorine"],
+    "formula": "CaCl₂",
+    "name": "Calcium chloride",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "775 °C",
+      "boiling_point": "1935 °C",
+      "density": "2.15 g/cm³"
+    },
+    "uses": [
+      "De-icing",
+      "Desiccant",
+      "Food additive",
+      "Concrete accelerator"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Calcium_chloride",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/5284359"
+    }
+  },
+  "Magnesium+Chlorine": {
+    "elements": ["Magnesium", "Chlorine"],
+    "formula": "MgCl₂",
+    "name": "Magnesium chloride",
+    "properties": {
+      "state": "Solid at STP",
+      "melting_point": "714 °C",
+      "boiling_point": "1412 °C",
+      "density": "2.32 g/cm³"
+    },
+    "uses": [
+      "De-icing",
+      "Dust control",
+      "Tofu coagulant",
+      "Fire extinguishers"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Magnesium_chloride",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/5360315"
+    }
+  },
+  "Phosphorus+Chlorine": {
+    "elements": ["Phosphorus", "Chlorine"],
+    "formula": "PCl₃",
+    "name": "Phosphorus trichloride",
+    "properties": {
+      "state": "Liquid at STP",
+      "melting_point": "-93.6 °C",
+      "boiling_point": "76.1 °C",
+      "density": "1.57 g/cm³"
+    },
+    "uses": [
+      "Chemical synthesis",
+      "Pesticides",
+      "Plasticizers",
+      "Flame retardants"
+    ],
+    "links": {
+      "wikipedia": "https://en.wikipedia.org/wiki/Phosphorus_trichloride",
+      "pubchem": "https://pubchem.ncbi.nlm.nih.gov/compound/24387"
+    }
+  }
+}
