@@ -37,10 +37,13 @@ export default function PeriodicTable({ onElementClick }: PeriodicTableProps = {
             : 'hover:ring-1 hover:ring-gray-300'
         }`}
         style={{
+          '--grid-column': position.column,
+          '--grid-row': position.row,
+          '--element-color': getElementCategoryColor(element),
           gridColumn: position.column,
           gridRow: position.row,
           backgroundColor: getElementCategoryColor(element)
-        }}
+        } as React.CSSProperties}
         onClick={() => handleElementClick(element)}
       >
         <div className="text-xs font-medium opacity-80">
@@ -60,16 +63,10 @@ export default function PeriodicTable({ onElementClick }: PeriodicTableProps = {
         {elements.map(renderElement)}
         
         {/* Placeholder for lanthanides and actinides indicators */}
-        <div 
-          className="flex items-center justify-center text-gray-500 text-xs font-medium bg-gray-100 rounded border border-dashed border-gray-300"
-          style={{ gridColumn: 3, gridRow: 6, minHeight: '40px', color: '#6b7280' }}
-        >
+        <div className="lanthanide-placeholder">
           57-71
         </div>
-        <div 
-          className="flex items-center justify-center text-gray-500 text-xs font-medium bg-gray-100 rounded border border-dashed border-gray-300"
-          style={{ gridColumn: 3, gridRow: 7, minHeight: '40px', color: '#6b7280' }}
-        >
+        <div className="actinide-placeholder">
           89-103
         </div>
       </div>

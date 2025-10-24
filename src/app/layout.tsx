@@ -1,9 +1,13 @@
 import '@/styles/globals.css'
+import '@/styles/browser-fixes.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import ErrorBoundary from '@/components/ErrorBoundary'
+import { ThemeProvider } from '@/components/ThemeProvider'
+import VantaBackground from '@/components/VantaBackground'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -36,25 +40,36 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-
+        <link rel="apple-touch-icon" href="/favicon.svg" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="ChemCraft" />
       </head>
-      <body className={`${inter.className} bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50`}>
-        <ClerkProvider>
-          <div className="min-h-screen flex flex-col relative">
-            <Header />
-            <main className="flex-1 container mx-auto px-4 py-8">
-              {children}
-            </main>
-            <Footer />
-          </div>
-        </ClerkProvider>
+      <body className={`${inter.className} bg-slate-900 text-slate-100`} suppressHydrationWarning>
+        <ThemeProvider>
+          <ClerkProvider>
+            <ErrorBoundary>
+              <VantaBackground />
+              <div className="relative min-h-screen flex flex-col">
+                {/* Overlay for text contrast over the 3D background */}
+                <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px] z-10 pointer-events-none"></div>
+                
+                {/* Main content */}
+                <div className="relative z-20 flex flex-col min-h-screen">
+                  <Header />
+                  <main className="flex-1 container mx-auto px-4 py-8">
+                    {children}
+                  </main>
+                  <Footer />
+                </div>
+              </div>
+            </ErrorBoundary>
+          </ClerkProvider>
+        </ThemeProvider>
         <script
           dangerouslySetInnerHTML={{
             __html: `

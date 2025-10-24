@@ -36,10 +36,10 @@ const ElementCard = memo(({ element }: ElementCardProps) => {
 
   return (
     <div className="h-full">
-      <Card className="h-full overflow-hidden hover:shadow-lg">
+      <Card className="h-full overflow-hidden bg-white/10 dark:bg-slate-800/30 backdrop-blur-md border border-white/20 dark:border-slate-200/20 shadow-xl hover:shadow-2xl shadow-black/10 transition-all duration-300 ease-in-out">
         <CardHeader 
-          className="text-white relative element-card-header"
-          style={{ backgroundColor: getElementCategoryColor(element) }}
+          className="text-white relative element-card-header backdrop-blur-sm"
+          style={{ backgroundColor: `${getElementCategoryColor(element)}CC` }}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
@@ -240,7 +240,7 @@ const ElementCard = memo(({ element }: ElementCardProps) => {
                 
                 {element.properties && element.properties.length > 0 && (
                   <div>
-                    <h3 className="text-lg font-semibold mb-3 text-gray-900">
+                    <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-slate-100 transition-colors duration-300">
                       Chemical Properties
                     </h3>
                     <div className="flex flex-wrap gap-2">
@@ -299,14 +299,14 @@ const ElementCard = memo(({ element }: ElementCardProps) => {
                 
                 {element.uses && element.uses.length > 0 && (
                   <div>
-                    <h3 className="text-lg font-semibold mb-3 text-gray-900">
+                    <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-slate-100 transition-colors duration-300">
                       Common Uses
                     </h3>
                     <div className="space-y-2">
                       {element.uses.map((use, index) => (
-                        <div key={index} className="flex items-start space-x-2 p-2 bg-gray-50 rounded-lg">
+                        <div key={index} className="flex items-start space-x-2 p-2 bg-gray-50 dark:bg-slate-700 rounded-lg transition-colors duration-300">
                           <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0" />
-                          <span className="text-gray-700">{use}</span>
+                          <span className="text-gray-700 dark:text-slate-300 transition-colors duration-300">{use}</span>
                         </div>
                       ))}
                     </div>

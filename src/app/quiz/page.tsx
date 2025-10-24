@@ -40,14 +40,14 @@ export default function QuizPage() {
   };
 
   if (!isLoaded) {
-    return <div className="flex items-center justify-center min-h-[60vh]">Loading...</div>;
+    return <div className="flex items-center justify-center min-h-[60vh] text-gray-900 dark:text-slate-100 transition-colors duration-300">Loading...</div>;
   }
 
   if (!isSignedIn) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
-        <h2 className="text-2xl font-bold mb-4">Sign in to take quizzes</h2>
-        <p className="text-gray-600 mb-6">You need to be signed in to take quizzes and track your progress.</p>
+        <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-slate-100 transition-colors duration-300">Sign in to take quizzes</h2>
+        <p className="text-gray-600 dark:text-slate-300 mb-6 transition-colors duration-300">You need to be signed in to take quizzes and track your progress.</p>
         <SignInButton mode="modal">
           <button className="bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700">
             Sign In
@@ -62,20 +62,22 @@ export default function QuizPage() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50/30 via-white/20 to-purple-50/30 dark:from-slate-900/40 dark:via-slate-800/20 dark:to-purple-900/30 px-4 md:px-8 lg:px-16 pt-8 md:pt-12 lg:pt-16 transition-all duration-300 ease-in-out">
       <div className="text-center mb-8">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-          Chemistry Quiz
-        </h1>
-        <p className="text-xl text-gray-600">
-          Test your knowledge and master chemistry concepts
-        </p>
+        <div className="bg-white/10 dark:bg-slate-800/30 backdrop-blur-md rounded-2xl p-8 border border-white/20 dark:border-slate-200/20 shadow-lg shadow-black/5 mx-auto max-w-4xl">
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-100 mb-4 transition-all duration-300 ease-in-out">
+            Chemistry Quiz
+          </h1>
+          <p className="text-xl text-slate-700 dark:text-slate-300 transition-all duration-300 ease-in-out">
+            Test your knowledge and master chemistry concepts
+          </p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-1">
-          <div className="bg-white rounded-lg p-6 border border-gray-200">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+          <div className="bg-white/10 dark:bg-slate-800/30 backdrop-blur-md rounded-2xl p-6 border border-white/20 dark:border-slate-200/20 shadow-xl shadow-black/10 transition-all duration-300 ease-in-out">
+            <h2 className="text-2xl font-semibold text-slate-800 dark:text-slate-100 mb-4 transition-all duration-300 ease-in-out">
               Your Stats
             </h2>
             
@@ -83,9 +85,9 @@ export default function QuizPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <Trophy className="h-5 w-5 text-yellow-500" />
-                  <span className="text-gray-700">Total Quizzes</span>
+                  <span className="text-gray-700 dark:text-slate-300 transition-colors duration-300">Total Quizzes</span>
                 </div>
-                <span className="font-semibold text-gray-900">
+                <span className="font-semibold text-gray-900 dark:text-slate-100 transition-colors duration-300">
                   {stats.totalQuizzes}
                 </span>
               </div>
@@ -93,9 +95,9 @@ export default function QuizPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <Target className="h-5 w-5 text-blue-500" />
-                  <span className="text-gray-700">Questions Answered</span>
+                  <span className="text-gray-700 dark:text-slate-300 transition-colors duration-300">Questions Answered</span>
                 </div>
-                <span className="font-semibold text-gray-900">
+                <span className="font-semibold text-gray-900 dark:text-slate-100 transition-colors duration-300">
                   {stats.totalQuestions}
                 </span>
               </div>
@@ -103,9 +105,9 @@ export default function QuizPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <Star className="h-5 w-5 text-green-500" />
-                  <span className="text-gray-700">Average Score</span>
+                  <span className="text-gray-700 dark:text-slate-300 transition-colors duration-300">Average Score</span>
                 </div>
-                <span className="font-semibold text-gray-900">
+                <span className="font-semibold text-gray-900 dark:text-slate-100 transition-colors duration-300">
                   {stats.averageScore.toFixed(1)}%
                 </span>
               </div>
@@ -113,9 +115,9 @@ export default function QuizPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <Trophy className="h-5 w-5 text-purple-500" />
-                  <span className="text-gray-700">Best Score</span>
+                  <span className="text-gray-700 dark:text-slate-300 transition-colors duration-300">Best Score</span>
                 </div>
-                <span className="font-semibold text-gray-900">
+                <span className="font-semibold text-gray-900 dark:text-slate-100 transition-colors duration-300">
                   {stats.bestScore.toFixed(1)}%
                 </span>
               </div>
@@ -123,9 +125,9 @@ export default function QuizPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <Star className="h-5 w-5 text-orange-500" />
-                  <span className="text-gray-700">Current Streak</span>
+                  <span className="text-gray-700 dark:text-slate-300 transition-colors duration-300">Current Streak</span>
                 </div>
-                <span className="font-semibold text-gray-900">
+                <span className="font-semibold text-gray-900 dark:text-slate-100 transition-colors duration-300">
                   {stats.streak}
                 </span>
               </div>
@@ -134,14 +136,14 @@ export default function QuizPage() {
         </div>
 
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-lg p-6 border border-gray-200">
+          <div className="bg-white/10 dark:bg-slate-800/30 backdrop-blur-md rounded-2xl p-6 border border-white/20 dark:border-slate-200/20 shadow-xl shadow-black/10 transition-all duration-300 ease-in-out">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-semibold text-gray-900">
+              <h2 className="text-2xl font-semibold text-gray-900 dark:text-slate-100 transition-colors duration-300">
                 Start New Quiz
               </h2>
               <button
                 onClick={() => setShowSettings(!showSettings)}
-                className="flex items-center space-x-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg"
+                className="flex items-center space-x-2 px-4 py-2 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg text-gray-900 dark:text-slate-100 transition-colors duration-300"
               >
                 <BookOpen className="h-4 w-4" />
                 <span>Settings</span>
@@ -149,19 +151,19 @@ export default function QuizPage() {
             </div>
 
             <div className="mb-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-slate-100 mb-4 transition-colors duration-300">
                 Quick Start
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <button
                   onClick={handleStartQuiz}
-                  className="p-4 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100"
+                  className="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors duration-300"
                 >
-                  <Play className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                  <div className="font-semibold text-blue-900">
+                  <Play className="h-8 w-8 text-blue-600 dark:text-blue-400 mx-auto mb-2" />
+                  <div className="font-semibold text-blue-900 dark:text-blue-100 transition-colors duration-300">
                     Standard Quiz
                   </div>
-                  <div className="text-sm text-blue-700">
+                  <div className="text-sm text-blue-700 dark:text-blue-300 transition-colors duration-300">
                     {settings.numberOfQuestions} questions • Mixed difficulty
                   </div>
                 </button>
@@ -171,13 +173,13 @@ export default function QuizPage() {
                     setSettings(prev => ({ ...prev, difficulty: [Difficulty.EASY] }));
                     handleStartQuiz();
                   }}
-                  className="p-4 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100"
+                  className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors duration-300"
                 >
-                  <Star className="h-8 w-8 text-green-600 mx-auto mb-2" />
-                  <div className="font-semibold text-green-900">
+                  <Star className="h-8 w-8 text-green-600 dark:text-green-400 mx-auto mb-2" />
+                  <div className="font-semibold text-green-900 dark:text-green-100 transition-colors duration-300">
                     Easy Quiz
                   </div>
-                  <div className="text-sm text-green-700">
+                  <div className="text-sm text-green-700 dark:text-green-300 transition-colors duration-300">
                     {settings.numberOfQuestions} questions • Easy only
                   </div>
                 </button>
@@ -185,14 +187,14 @@ export default function QuizPage() {
             </div>
 
             {showSettings && (
-              <div className="border-t border-gray-200 pt-6">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">
+              <div className="border-t border-gray-200 dark:border-slate-600 pt-6 transition-colors duration-300">
+                <h3 className="text-lg font-medium text-gray-900 dark:text-slate-100 mb-4 transition-colors duration-300">
                   Quiz Settings
                 </h3>
                 
                 <div className="space-y-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2 transition-colors duration-300">
                       Number of Questions: {settings.numberOfQuestions}
                     </label>
                     <input
@@ -201,16 +203,16 @@ export default function QuizPage() {
                       max="20"
                       value={settings.numberOfQuestions}
                       onChange={(e) => updateSettings('numberOfQuestions', parseInt(e.target.value))}
-                      className="w-full"
+                      className="w-full accent-blue-600 dark:accent-blue-500"
                     />
-                    <div className="flex justify-between text-sm text-gray-500">
+                    <div className="flex justify-between text-sm text-gray-500 dark:text-slate-400 transition-colors duration-300">
                       <span>5</span>
                       <span>20</span>
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2 transition-colors duration-300">
                       Difficulty Levels
                     </label>
                     <div className="flex flex-wrap gap-2">
@@ -218,10 +220,10 @@ export default function QuizPage() {
                         <button
                           key={key}
                           onClick={() => toggleDifficulty(key as Difficulty)}
-                          className={`px-3 py-1 rounded-full text-sm font-medium ${
+                          className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-300 ${
                             settings.difficulty.includes(key as Difficulty)
                               ? 'text-white'
-                              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                              : 'bg-gray-200 dark:bg-slate-600 text-gray-700 dark:text-slate-300 hover:bg-gray-300 dark:hover:bg-slate-500'
                           }`}
                           style={{
                             backgroundColor: settings.difficulty.includes(key as Difficulty) 
@@ -236,7 +238,7 @@ export default function QuizPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2 transition-colors duration-300">
                       Categories
                     </label>
                     <div className="grid grid-cols-2 gap-2">
@@ -244,10 +246,10 @@ export default function QuizPage() {
                         <button
                           key={key}
                           onClick={() => toggleCategory(key as QuizCategory)}
-                          className={`p-2 rounded-lg text-sm font-medium text-left border ${
+                          className={`p-2 rounded-lg text-sm font-medium text-left border transition-colors duration-300 ${
                             settings.categories.includes(key as QuizCategory)
-                              ? 'bg-blue-100 border-blue-300 text-blue-800'
-                              : 'bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200'
+                              ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200'
+                              : 'bg-gray-100 dark:bg-slate-700 border-gray-300 dark:border-slate-600 text-gray-700 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-600'
                           }`}
                         >
                           {info.name}
@@ -262,9 +264,9 @@ export default function QuizPage() {
                         type="checkbox"
                         checked={settings.hintsEnabled}
                         onChange={(e) => updateSettings('hintsEnabled', e.target.checked)}
-                        className="rounded border-gray-300"
+                        className="rounded border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-blue-600 focus:ring-blue-500 dark:focus:ring-blue-400"
                       />
-                      <span className="text-sm text-gray-700">
+                      <span className="text-sm text-gray-700 dark:text-slate-300 transition-colors duration-300">
                         Enable hints
                       </span>
                     </label>
@@ -274,9 +276,9 @@ export default function QuizPage() {
                         type="checkbox"
                         checked={settings.showExplanations}
                         onChange={(e) => updateSettings('showExplanations', e.target.checked)}
-                        className="rounded border-gray-300"
+                        className="rounded border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-blue-600 focus:ring-blue-500 dark:focus:ring-blue-400"
                       />
-                      <span className="text-sm text-gray-700">
+                      <span className="text-sm text-gray-700 dark:text-slate-300 transition-colors duration-300">
                         Show explanations after answers
                       </span>
                     </label>
@@ -286,9 +288,9 @@ export default function QuizPage() {
                         type="checkbox"
                         checked={settings.randomOrder}
                         onChange={(e) => updateSettings('randomOrder', e.target.checked)}
-                        className="rounded border-gray-300"
+                        className="rounded border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-blue-600 focus:ring-blue-500 dark:focus:ring-blue-400"
                       />
-                      <span className="text-sm text-gray-700">
+                      <span className="text-sm text-gray-700 dark:text-slate-300 transition-colors duration-300">
                         Random question order
                       </span>
                     </label>
@@ -300,7 +302,7 @@ export default function QuizPage() {
             <div className="mt-6">
               <button
                 onClick={handleStartQuiz}
-                className="w-full flex items-center justify-center space-x-2 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold"
+                className="w-full flex items-center justify-center space-x-2 py-3 bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600 text-white rounded-lg font-semibold transition-colors duration-300"
               >
                 <Play className="h-5 w-5" />
                 <span>Start Quiz</span>
@@ -357,18 +359,18 @@ function QuizSession() {
   if (currentSession.completed) {
     const score = (currentSession.answers.filter(a => a.isCorrect).length / currentSession.answers.length) * 100;
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="bg-white rounded-lg p-8 border border-gray-200 max-w-md w-full text-center">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50/30 via-white/20 to-purple-50/30 dark:from-slate-900/40 dark:via-slate-800/20 dark:to-purple-900/30 px-4 transition-all duration-300 ease-in-out">
+        <div className="bg-white/10 dark:bg-slate-800/30 backdrop-blur-md rounded-2xl p-8 border border-white/20 dark:border-slate-200/20 shadow-xl shadow-black/10 max-w-md w-full text-center transition-all duration-300 ease-in-out">
           <Trophy className="h-16 w-16 text-yellow-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Quiz Complete!</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100 mb-4 transition-colors duration-300">Quiz Complete!</h2>
           <div className="space-y-2 mb-6">
-            <p className="text-lg">Score: <span className="font-bold text-blue-600">{score.toFixed(1)}%</span></p>
-            <p>Correct: {currentSession.answers.filter(a => a.isCorrect).length}/{currentSession.answers.length}</p>
-            <p>Total Points: {currentSession.score}</p>
+            <p className="text-lg text-gray-900 dark:text-slate-100 transition-colors duration-300">Score: <span className="font-bold text-blue-600 dark:text-blue-400">{score.toFixed(1)}%</span></p>
+            <p className="text-gray-700 dark:text-slate-300 transition-colors duration-300">Correct: {currentSession.answers.filter(a => a.isCorrect).length}/{currentSession.answers.length}</p>
+            <p className="text-gray-700 dark:text-slate-300 transition-colors duration-300">Total Points: {currentSession.score}</p>
           </div>
           <button
             onClick={resetQuiz}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
+            className="w-full bg-blue-600 dark:bg-blue-700 text-white py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-300"
           >
             Take Another Quiz
           </button>
@@ -378,38 +380,38 @@ function QuizSession() {
   }
 
   return (
-    <div className="min-h-screen py-8">
+    <div className="min-h-screen py-8 bg-gradient-to-br from-blue-50/30 via-white/20 to-purple-50/30 dark:from-slate-900/40 dark:via-slate-800/20 dark:to-purple-900/30 transition-all duration-300 ease-in-out">
       <div className="max-w-4xl mx-auto px-4">
-        <div className="mb-6">
+        <div className="mb-6 bg-white/10 dark:bg-slate-800/30 backdrop-blur-md rounded-2xl p-4 border border-white/20 dark:border-slate-200/20 shadow-lg shadow-black/5">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-slate-700 dark:text-slate-300 transition-all duration-300 ease-in-out">
               Question {currentSession.currentQuestionIndex + 1} of {currentSession.questions.length}
             </span>
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-slate-700 dark:text-slate-300 transition-all duration-300 ease-in-out">
               Score: {currentSession.score} points
             </span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className="w-full bg-white/20 dark:bg-slate-700/50 backdrop-blur-sm rounded-full h-3 border border-white/30 dark:border-slate-200/30">
             <div 
-              className="bg-blue-600 h-2 rounded-full"
+              className="bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 h-full rounded-full transition-all duration-500 ease-out shadow-sm"
               style={{ width: `${progress}%` }}
             />
           </div>
         </div>
 
-        <div className="bg-white rounded-lg p-6 border border-gray-200 mb-6">
+        <div className="bg-white/10 dark:bg-slate-800/30 backdrop-blur-md rounded-2xl p-6 border border-white/20 dark:border-slate-200/20 shadow-xl shadow-black/10 mb-6 transition-all duration-300 ease-in-out">
           <div className="flex items-center justify-between mb-4">
             <span className={`px-3 py-1 rounded-full text-sm font-medium text-white`}
               style={{ backgroundColor: DIFFICULTY_SETTINGS[currentQuestion.difficulty].color }}
             >
               {DIFFICULTY_SETTINGS[currentQuestion.difficulty].name}
             </span>
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-slate-300 transition-colors duration-300">
               {currentQuestion.points} points
             </span>
           </div>
           
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-slate-100 mb-6 transition-colors duration-300">
             {currentQuestion.question}
           </h2>
 
@@ -419,10 +421,10 @@ function QuizSession() {
                 key={index}
                 onClick={() => setSelectedAnswer(option)}
                 disabled={showExplanation}
-                className={`w-full p-4 text-left rounded-lg border-2 ${
+                className={`w-full p-4 text-left rounded-lg border-2 text-gray-900 dark:text-slate-100 transition-colors duration-300 ${
                   selectedAnswer === option
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? 'border-blue-500 dark:border-blue-400 bg-blue-50 dark:bg-blue-900/30'
+                    : 'border-gray-200 dark:border-slate-600 hover:border-gray-300 dark:hover:border-slate-500 bg-white dark:bg-slate-800'
                 } ${showExplanation ? 'cursor-not-allowed' : 'cursor-pointer'}`}
               >
                 {option}
@@ -434,10 +436,10 @@ function QuizSession() {
                 <button
                   onClick={() => setSelectedAnswer('true')}
                   disabled={showExplanation}
-                  className={`flex-1 p-4 rounded-lg border-2 ${
+                  className={`flex-1 p-4 rounded-lg border-2 text-gray-900 dark:text-slate-100 transition-colors duration-300 ${
                     selectedAnswer === 'true'
-                      ? 'border-green-500 bg-green-50'
-                      : 'border-gray-200 hover:border-gray-300'
+                      ? 'border-green-500 dark:border-green-400 bg-green-50 dark:bg-green-900/30'
+                      : 'border-gray-200 dark:border-slate-600 hover:border-gray-300 dark:hover:border-slate-500 bg-white dark:bg-slate-800'
                   }`}
                 >
                   True
@@ -445,10 +447,10 @@ function QuizSession() {
                 <button
                   onClick={() => setSelectedAnswer('false')}
                   disabled={showExplanation}
-                  className={`flex-1 p-4 rounded-lg border-2 ${
+                  className={`flex-1 p-4 rounded-lg border-2 text-gray-900 dark:text-slate-100 transition-colors duration-300 ${
                     selectedAnswer === 'false'
-                      ? 'border-red-500 bg-red-50'
-                      : 'border-gray-200 hover:border-gray-300'
+                      ? 'border-red-500 dark:border-red-400 bg-red-50 dark:bg-red-900/30'
+                      : 'border-gray-200 dark:border-slate-600 hover:border-gray-300 dark:hover:border-slate-500 bg-white dark:bg-slate-800'
                   }`}
                 >
                   False
@@ -462,32 +464,32 @@ function QuizSession() {
                 value={selectedAnswer}
                 onChange={(e) => setSelectedAnswer(e.target.value)}
                 disabled={showExplanation}
-                className="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
+                className="w-full p-4 border-2 border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-slate-100 rounded-lg focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-colors duration-300"
                 placeholder="Enter your answer..."
               />
             )}
           </div>
 
           {showExplanation && (
-            <div className={`p-4 rounded-lg mb-4 ${
+            <div className={`p-4 rounded-lg mb-4 transition-colors duration-300 ${
               selectedAnswer.toString().toLowerCase() === currentQuestion.correctAnswer.toString().toLowerCase()
-                ? 'bg-green-50 border border-green-200'
-                : 'bg-red-50 border border-red-200'
+                ? 'bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800'
+                : 'bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800'
             }`}>
-              <p className="font-medium mb-2">
+              <p className="font-medium mb-2 text-gray-900 dark:text-slate-100 transition-colors duration-300">
                 {selectedAnswer.toString().toLowerCase() === currentQuestion.correctAnswer.toString().toLowerCase()
                   ? '✅ Correct!'
                   : `❌ Incorrect. The correct answer is: ${currentQuestion.correctAnswer}`
                 }
               </p>
-              <p className="text-sm text-gray-700">{currentQuestion.explanation}</p>
+              <p className="text-sm text-gray-700 dark:text-slate-300 transition-colors duration-300">{currentQuestion.explanation}</p>
             </div>
           )}
 
           <div className="flex justify-between">
             <button
               onClick={resetQuiz}
-              className="px-4 py-2 text-gray-600 hover:text-gray-800"
+              className="px-4 py-2 text-gray-600 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200 transition-colors duration-300"
             >
               End Quiz
             </button>
@@ -496,14 +498,14 @@ function QuizSession() {
               <button
                 onClick={handleSubmitAnswer}
                 disabled={!selectedAnswer}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+                className="px-6 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 disabled:bg-gray-300 dark:disabled:bg-slate-600 disabled:cursor-not-allowed transition-colors duration-300"
               >
                 Submit Answer
               </button>
             ) : (
               <button
                 onClick={handleNext}
-                className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                className="px-6 py-2 bg-green-600 dark:bg-green-700 text-white rounded-lg hover:bg-green-700 dark:hover:bg-green-600 transition-colors duration-300"
               >
                 {isLastQuestion ? 'Finish Quiz' : 'Next Question'}
               </button>

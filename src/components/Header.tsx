@@ -19,18 +19,20 @@ export default function Header() {
   ];
   
   return (
-    <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
+    <header className="bg-slate-900/30 backdrop-blur-md backdrop-saturate-150 border-b border-slate-700/50 sticky top-0 z-50 transition-all duration-300 ease-in-out">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2 text-2xl font-bold text-primary-600">
-            <Beaker className="h-8 w-8" />
+          <Link href="/" className="flex items-center space-x-2 text-2xl font-bold text-slate-100 hover:text-blue-400 transition-all duration-300 ease-in-out">
+            <div className="p-2 bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-sm rounded-xl border border-slate-700/50">
+              <Beaker className="h-6 w-6" />
+            </div>
             <span>ChemCraft</span>
           </Link>
           
           {/* Navigation */}
           <div className="flex items-center space-x-4">
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="flex items-center space-x-2">
             {navigation.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
@@ -39,52 +41,31 @@ export default function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`flex items-center space-x-2 px-3 py-2 rounded-lg ${
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-2xl backdrop-blur-sm border transition-all duration-300 ease-in-out ${
                     isActive
-                      ? 'bg-primary-100 text-primary-700'
-                      : 'text-gray-600 hover:bg-gray-100'
+                      ? 'bg-blue-500/30 border-blue-400/30 text-blue-300 shadow-lg shadow-blue-500/20'
+                      : 'bg-slate-800/30 border-slate-700/50 text-slate-300 hover:bg-slate-800/50 hover:shadow-md hover:shadow-black/10'
                   }`}
                 >
                   <Icon className="h-4 w-4" />
-                  <span>{item.name}</span>
+                  <span className="hidden sm:inline">{item.name}</span>
                 </Link>
               );
             })}
             </nav>
             {isSignedIn ? (
-              <UserButton afterSignOutUrl="/" />
+              <div className="p-1 bg-slate-800/30 backdrop-blur-sm rounded-2xl border border-slate-700/50">
+                <UserButton afterSignOutUrl="/" />
+              </div>
             ) : (
               <SignInButton mode="modal">
-                <button className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700">
+                <button className="bg-gradient-to-r from-blue-600/40 to-purple-600/40 backdrop-blur-sm border border-slate-700/50 text-slate-100 px-6 py-2 rounded-2xl hover:from-blue-600/50 hover:to-purple-600/50 transition-all duration-300 ease-in-out shadow-lg hover:shadow-xl shadow-blue-500/20">
                   Sign In
                 </button>
               </SignInButton>
             )}
           </div>
         </div>
-        
-        {/* Mobile Navigation */}
-        <nav className="md:hidden mt-4 flex flex-wrap gap-2">
-          {navigation.map((item) => {
-            const Icon = item.icon;
-            const isActive = pathname === item.href;
-            
-            return (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm ${
-                  isActive
-                    ? 'bg-primary-100 text-primary-700'
-                    : 'text-gray-600 hover:bg-gray-100'
-                }`}
-              >
-                <Icon className="h-4 w-4" />
-                <span>{item.name}</span>
-              </Link>
-            );
-          })}
-        </nav>
       </div>
     </header>
   );

@@ -52,6 +52,42 @@ ChemCraft is a modern, interactive web application designed to make chemistry le
    npm install
    ```
 
+## 🚀 Quick Start
+
+### Method 1: Using Start Scripts (Recommended)
+- **Windows**: Double-click `start-dev.bat`
+- **PowerShell**: Right-click `start-dev.ps1` → "Run with PowerShell"
+
+### Method 2: Manual Terminal
+```bash
+# Navigate to project directory
+cd "C:\Users\swapn\Desktop\Projects\Chemcraft\chemcraft"
+
+# Start development server
+npm run dev
+```
+
+### Method 3: VS Code
+- Open `chemcraft.code-workspace` in VS Code
+- Use Ctrl+Shift+P → "Tasks: Run Task" → "Start Dev Server"
+
+## 📚 Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run dev:turbo` - Start with Turbo mode (faster)
+- `npm run build` - Build for production  
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run lint:fix` - Fix ESLint issues
+- `npm run type-check` - TypeScript checking
+- `npm run clean` - Clean build files
+- `npm run reinstall` - Clean reinstall
+
+3. **Start development:**
+   ```bash
+   npm install
+   ```
+
 3. **Run the development server:**
    ```bash
    npm run dev
