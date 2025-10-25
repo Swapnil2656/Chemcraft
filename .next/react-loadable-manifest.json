@@ -22,11 +22,5 @@
     "files": [
       "static/chunks/_app-pages-browser_src_components_PeriodicTable_tsx-_ae5e0.js"
     ]
-  },
-  "components\\VantaBackground.tsx -> three": {
-    "id": "components\\VantaBackground.tsx -> three",
-    "files": [
-      "static/chunks/_app-pages-browser_node_modules_three_build_three_module_js.js"
-    ]
   }
 }

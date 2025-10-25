@@ -1,0 +1,9 @@
+{
+  "testsprite.apiKey": "sk-user-2ayue2VHZKHXAB9E3EnKTggEcGpcsNYeCGMikw-grOYgHdLORLh2HxnVegXZ-4zLoqxkq5DxCkp9J_54eYrEMuYSH6hgQFYM-uyjSEQojEMUYaO4LfJTMRmaGMwTy0IgJmo",
+  "testsprite.enabled": true,
+  "testsprite.port": 3002,
+  "testsprite.projectType": "frontend",
+  "files.associations": {
+    "*.testsprite": "json"
+  }
+}

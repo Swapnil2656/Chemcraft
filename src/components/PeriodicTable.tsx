@@ -40,10 +40,10 @@ export default function PeriodicTable({ onElementClick }: PeriodicTableProps = {
           '--grid-column': position.column,
           '--grid-row': position.row,
           '--element-color': getElementCategoryColor(element),
-          gridColumn: position.column,
-          gridRow: position.row,
-          backgroundColor: getElementCategoryColor(element)
         } as React.CSSProperties}
+        data-grid-column={position.column}
+        data-grid-row={position.row}
+        data-element-color={getElementCategoryColor(element)}
         onClick={() => handleElementClick(element)}
       >
         <div className="text-xs font-medium opacity-80">

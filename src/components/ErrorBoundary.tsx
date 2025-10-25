@@ -10,20 +10,68 @@ interface Props {
 interface State {
   hasError: boolean;
   error?: Error;
+  errorInfo?: ErrorInfo;
+  errorId?: string;
 }
 
 class ErrorBoundary extends Component<Props, State> {
+  private retryCount = 0;
+  private maxRetries = 3;
+
   public state: State = {
     hasError: false
   };
 
   public static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, error };
+    const errorId = `ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return { hasError: true, error, errorId };
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Error caught by boundary:', error, errorInfo);
+    console.error('ChemCraft Error Boundary - Error caught:', error, errorInfo);
+    
+    // Enhanced error logging for TestSprite monitoring
+    this.setState({ errorInfo });
+    
+    // Report error to monitoring service (if available)
+    this.reportError(error, errorInfo);
   }
+
+  private reportError = (error: Error, errorInfo: ErrorInfo) => {
+    try {
+      // Log structured error data for better debugging
+      const errorReport = {
+        message: error.message,
+        stack: error.stack,
+        componentStack: errorInfo.componentStack,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent,
+        url: window.location.href,
+        errorId: this.state.errorId,
+        retryCount: this.retryCount
+      };
+      
+      console.group('🚨 ChemCraft Error Report');
+      console.error('Error Details:', errorReport);
+      console.groupEnd();
+      
+      // In production, send to error tracking service
+      // Example: Sentry, LogRocket, or custom analytics
+    } catch (reportingError) {
+      console.error('Failed to report error:', reportingError);
+    }
+  };
+
+  private handleRetry = () => {
+    if (this.retryCount < this.maxRetries) {
+      this.retryCount++;
+      this.setState({ 
+        hasError: false, 
+        error: undefined, 
+        errorInfo: undefined 
+      });
+    }
+  };
 
   public render() {
     if (this.state.hasError) {
@@ -48,17 +96,23 @@ class ErrorBoundary extends Component<Props, State> {
             <div className="flex space-x-3">
               <button
                 onClick={() => window.location.reload()}
-                className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
               >
                 Refresh Page
               </button>
               <button
-                onClick={() => this.setState({ hasError: false, error: undefined })}
-                className="flex-1 bg-gray-200 text-gray-800 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                onClick={this.handleRetry}
+                disabled={this.retryCount >= this.maxRetries}
+                className="flex-1 bg-gray-200 text-gray-800 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                Try Again
+                Try Again ({this.maxRetries - this.retryCount} left)
               </button>
             </div>
+            {this.state.errorId && (
+              <div className="mt-4 text-xs text-gray-500 text-center">
+                Error ID: {this.state.errorId}
+              </div>
+            )}
             {process.env.NODE_ENV === 'development' && this.state.error && (
               <details className="mt-4">
                 <summary className="text-sm font-medium text-gray-700 cursor-pointer">

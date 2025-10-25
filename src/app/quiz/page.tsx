@@ -6,6 +6,7 @@ import { Play, Trophy, Clock, BookOpen, Star, Target } from 'lucide-react';
 import { useQuizStore } from '@/stores/quizStore';
 import { QuizSettings, Difficulty, QuizCategory, QuestionType } from '@/types/quiz';
 import { DEFAULT_QUIZ_SETTINGS, QUIZ_CATEGORIES_INFO, DIFFICULTY_SETTINGS } from '@/constants/quizData';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 export default function QuizPage() {
   const { isSignedIn, isLoaded } = useUser();
@@ -204,6 +205,8 @@ export default function QuizPage() {
                       value={settings.numberOfQuestions}
                       onChange={(e) => updateSettings('numberOfQuestions', parseInt(e.target.value))}
                       className="w-full accent-blue-600 dark:accent-blue-500"
+                      title="Select number of quiz questions"
+                      aria-label="Number of questions for the quiz"
                     />
                     <div className="flex justify-between text-sm text-gray-500 dark:text-slate-400 transition-colors duration-300">
                       <span>5</span>
@@ -226,10 +229,9 @@ export default function QuizPage() {
                               : 'bg-gray-200 dark:bg-slate-600 text-gray-700 dark:text-slate-300 hover:bg-gray-300 dark:hover:bg-slate-500'
                           }`}
                           style={{
-                            backgroundColor: settings.difficulty.includes(key as Difficulty) 
-                              ? info.color 
-                              : undefined
-                          }}
+                            '--difficulty-color': settings.difficulty.includes(key as Difficulty) ? info.color : 'transparent',
+                          } as React.CSSProperties}
+                          data-selected={settings.difficulty.includes(key as Difficulty)}
                         >
                           {info.name}
                         </button>
@@ -393,16 +395,16 @@ function QuizSession() {
           </div>
           <div className="w-full bg-white/20 dark:bg-slate-700/50 backdrop-blur-sm rounded-full h-3 border border-white/30 dark:border-slate-200/30">
             <div 
-              className="bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 h-full rounded-full transition-all duration-500 ease-out shadow-sm"
-              style={{ width: `${progress}%` }}
+              className="bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 h-full rounded-full transition-all duration-500 ease-out shadow-sm progress-bar"
+              style={{ '--progress-width': `${progress}%` } as React.CSSProperties}
             />
           </div>
         </div>
 
         <div className="bg-white/10 dark:bg-slate-800/30 backdrop-blur-md rounded-2xl p-6 border border-white/20 dark:border-slate-200/20 shadow-xl shadow-black/10 mb-6 transition-all duration-300 ease-in-out">
           <div className="flex items-center justify-between mb-4">
-            <span className={`px-3 py-1 rounded-full text-sm font-medium text-white`}
-              style={{ backgroundColor: DIFFICULTY_SETTINGS[currentQuestion.difficulty].color }}
+            <span className={`px-3 py-1 rounded-full text-sm font-medium text-white difficulty-badge`}
+              style={{ '--difficulty-color': DIFFICULTY_SETTINGS[currentQuestion.difficulty].color } as React.CSSProperties}
             >
               {DIFFICULTY_SETTINGS[currentQuestion.difficulty].name}
             </span>

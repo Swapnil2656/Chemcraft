@@ -98,10 +98,10 @@ const ElementCard = memo(({ element }: ElementCardProps) => {
                         isCurrentElement ? 'ring-1 ring-white' : ''
                       }`}
                       style={{
-                        gridColumn: position.column,
-                        gridRow: position.row,
-                        backgroundColor: getElementCategoryColor(miniElement)
-                      }}
+                        '--grid-column': position.column,
+                        '--grid-row': position.row,
+                        '--element-color': getElementCategoryColor(miniElement)
+                      } as React.CSSProperties}
                     />
                   );
                 })}
@@ -123,12 +123,12 @@ const ElementCard = memo(({ element }: ElementCardProps) => {
                 <div className="grid grid-cols-2 gap-3">
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-3 border border-blue-200">
-                        <div className="text-xs text-blue-600 mb-1 font-medium">
-                          Atomic Weight
+                      <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg p-3 border border-blue-200 dark:border-blue-700 transition-colors duration-300">
+                        <div className="text-xs text-blue-600 dark:text-blue-300 mb-1 font-medium transition-colors duration-300">
+                          Atomic Mass
                         </div>
-                        <div className="text-lg font-bold text-blue-900">
-                          {element.atomicWeight}
+                        <div className="text-lg font-bold text-blue-900 dark:text-blue-100 transition-colors duration-300">
+                          {element.atomicWeight} u
                         </div>
                       </div>
                     </TooltipTrigger>
@@ -139,11 +139,11 @@ const ElementCard = memo(({ element }: ElementCardProps) => {
                   
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-3 border border-purple-200">
-                        <div className="text-xs text-purple-600 mb-1 font-medium">
+                      <div className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-lg p-3 border border-purple-200 dark:border-purple-700 transition-colors duration-300">
+                        <div className="text-xs text-purple-600 dark:text-purple-300 mb-1 font-medium transition-colors duration-300">
                           Category
                         </div>
-                        <div className="text-lg font-bold text-purple-900">
+                        <div className="text-lg font-bold text-purple-900 dark:text-purple-100 transition-colors duration-300">
                           {element.category.replace('-', ' ')}
                         </div>
                       </div>
@@ -153,20 +153,20 @@ const ElementCard = memo(({ element }: ElementCardProps) => {
                     </TooltipContent>
                   </Tooltip>
                   
-                  <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-3 border border-green-200">
-                    <div className="text-xs text-green-600 mb-1 font-medium">
+                  <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg p-3 border border-green-200 dark:border-green-700 transition-colors duration-300">
+                    <div className="text-xs text-green-600 dark:text-green-300 mb-1 font-medium transition-colors duration-300">
                       Period
                     </div>
-                    <div className="text-lg font-bold text-green-900">
+                    <div className="text-lg font-bold text-green-900 dark:text-green-100 transition-colors duration-300">
                       {element.period}
                     </div>
                   </div>
                   
-                  <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-3 border border-orange-200">
-                    <div className="text-xs text-orange-600 mb-1 font-medium">
+                  <div className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 rounded-lg p-3 border border-orange-200 dark:border-orange-700 transition-colors duration-300">
+                    <div className="text-xs text-orange-600 dark:text-orange-300 mb-1 font-medium transition-colors duration-300">
                       Group
                     </div>
-                    <div className="text-lg font-bold text-orange-900">
+                    <div className="text-lg font-bold text-orange-900 dark:text-orange-100 transition-colors duration-300">
                       {element.group}
                     </div>
                   </div>
@@ -188,50 +188,50 @@ const ElementCard = memo(({ element }: ElementCardProps) => {
               </TabsContent>
               
               <TabsContent value="properties" className="space-y-4 mt-4">
-                <div className="bg-gradient-to-r from-emerald-50 to-green-50 rounded-lg p-4 border border-emerald-200">
+                <div className="bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 rounded-lg p-4 border border-emerald-200 dark:border-emerald-700 transition-colors duration-300">
                   <div className="flex items-center space-x-2 mb-3">
-                    <Thermometer className="h-5 w-5 text-emerald-600" />
-                    <h3 className="text-lg font-semibold text-emerald-900">
+                    <Thermometer className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                    <h3 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100 transition-colors duration-300">
                       Physical Properties
                     </h3>
                   </div>
                   <div className="grid grid-cols-1 gap-3 text-sm">
-                    <div className="flex justify-between items-center p-2 bg-white/50 rounded">
-                      <span className="text-emerald-700 font-medium">Phase:</span>
-                      <Badge variant="outline" className="capitalize">
+                    <div className="flex justify-between items-center p-2 bg-white/50 dark:bg-slate-800/50 rounded transition-colors duration-300">
+                      <span className="text-emerald-700 dark:text-emerald-300 font-medium transition-colors duration-300">Phase:</span>
+                      <Badge variant="outline" className="capitalize border-emerald-300 dark:border-emerald-600 text-emerald-700 dark:text-emerald-300 transition-colors duration-300">
                         {element.phase}
                       </Badge>
                     </div>
                     {element.meltingPoint && (
-                      <div className="flex justify-between items-center p-2 bg-white/50 rounded">
-                        <span className="text-emerald-700 font-medium">Melting Point:</span>
-                        <span className="font-semibold">
+                      <div className="flex justify-between items-center p-2 bg-white/50 dark:bg-slate-800/50 rounded transition-colors duration-300">
+                        <span className="text-emerald-700 dark:text-emerald-300 font-medium transition-colors duration-300">Melting Point:</span>
+                        <span className="font-semibold text-gray-900 dark:text-gray-100 transition-colors duration-300">
                           {formatTemperature(element.meltingPoint)}
                         </span>
                       </div>
                     )}
                     {element.boilingPoint && (
-                      <div className="flex justify-between items-center p-2 bg-white/50 rounded">
-                        <span className="text-emerald-700 font-medium">Boiling Point:</span>
-                        <span className="font-semibold">
+                      <div className="flex justify-between items-center p-2 bg-white/50 dark:bg-slate-800/50 rounded transition-colors duration-300">
+                        <span className="text-emerald-700 dark:text-emerald-300 font-medium transition-colors duration-300">Boiling Point:</span>
+                        <span className="font-semibold text-gray-900 dark:text-gray-100 transition-colors duration-300">
                           {formatTemperature(element.boilingPoint)}
                         </span>
                       </div>
                     )}
                     {element.density && (
-                      <div className="flex justify-between items-center p-2 bg-white/50 rounded">
-                        <span className="text-emerald-700 font-medium">Density:</span>
-                        <span className="font-semibold">
+                      <div className="flex justify-between items-center p-2 bg-white/50 dark:bg-slate-800/50 rounded transition-colors duration-300">
+                        <span className="text-emerald-700 dark:text-emerald-300 font-medium transition-colors duration-300">Density:</span>
+                        <span className="font-semibold text-gray-900 dark:text-gray-100 transition-colors duration-300">
                           {element.density} g/cm³
                         </span>
                       </div>
                     )}
                     {element.electronegativity && (
-                      <div className="flex justify-between items-center p-2 bg-white/50 rounded">
-                        <span className="text-emerald-700 font-medium">Electronegativity:</span>
+                      <div className="flex justify-between items-center p-2 bg-white/50 dark:bg-slate-800/50 rounded transition-colors duration-300">
+                        <span className="text-emerald-700 dark:text-emerald-300 font-medium transition-colors duration-300">Electronegativity:</span>
                         <div className="flex items-center space-x-2">
                           <Progress value={element.electronegativity * 25} className="w-16 h-2" />
-                          <span className="font-semibold">{element.electronegativity}</span>
+                          <span className="font-semibold text-gray-900 dark:text-gray-100 transition-colors duration-300">{element.electronegativity}</span>
                         </div>
                       </div>
                     )}
@@ -248,7 +248,7 @@ const ElementCard = memo(({ element }: ElementCardProps) => {
                         <Badge
                           key={index}
                           variant="secondary"
-                          className="text-sm bg-gradient-to-r from-violet-100 to-purple-100 text-violet-800 border-violet-200"
+                          className="text-sm bg-gradient-to-r from-violet-100 to-purple-100 dark:from-violet-900/30 dark:to-purple-900/30 text-violet-800 dark:text-violet-200 border-violet-200 dark:border-violet-700 transition-colors duration-300"
                         >
                           {property}
                         </Badge>
@@ -259,36 +259,36 @@ const ElementCard = memo(({ element }: ElementCardProps) => {
               </TabsContent>
               
               <TabsContent value="details" className="space-y-4 mt-4">
-                <div className="bg-gradient-to-r from-rose-50 to-pink-50 rounded-lg p-4 border border-rose-200">
+                <div className="bg-gradient-to-r from-rose-50 to-pink-50 dark:from-rose-900/20 dark:to-pink-900/20 rounded-lg p-4 border border-rose-200 dark:border-rose-700 transition-colors duration-300">
                   <div className="flex items-center space-x-2 mb-3">
-                    <Info className="h-5 w-5 text-rose-600" />
-                    <h3 className="text-lg font-semibold text-rose-900">
+                    <Info className="h-5 w-5 text-rose-600 dark:text-rose-400" />
+                    <h3 className="text-lg font-semibold text-rose-900 dark:text-rose-100 transition-colors duration-300">
                       Description
                     </h3>
                   </div>
-                  <p className="text-rose-800 leading-relaxed">
+                  <p className="text-rose-800 dark:text-rose-200 leading-relaxed transition-colors duration-300">
                     {element.description}
                   </p>
                 </div>
                 
                 {element.discoveredBy && (
-                  <div className="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-lg p-4 border border-amber-200">
-                    <h3 className="text-lg font-semibold mb-3 text-amber-900">
+                  <div className="bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 rounded-lg p-4 border border-amber-200 dark:border-amber-700 transition-colors duration-300">
+                    <h3 className="text-lg font-semibold mb-3 text-amber-900 dark:text-amber-100 transition-colors duration-300">
                       Discovery
                     </h3>
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center space-x-2">
-                        <Badge variant="outline" className="bg-amber-100 text-amber-800">
+                        <Badge variant="outline" className="bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200 border-amber-300 dark:border-amber-600 transition-colors duration-300">
                           Discovered by
                         </Badge>
-                        <span className="font-semibold text-amber-900">{element.discoveredBy}</span>
+                        <span className="font-semibold text-amber-900 dark:text-amber-100 transition-colors duration-300">{element.discoveredBy}</span>
                       </div>
                       {element.discoveredYear && (
                         <div className="flex items-center space-x-2">
-                          <Badge variant="outline" className="bg-amber-100 text-amber-800">
+                          <Badge variant="outline" className="bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200 border-amber-300 dark:border-amber-600 transition-colors duration-300">
                             Year
                           </Badge>
-                          <span className="font-semibold text-amber-900">
+                          <span className="font-semibold text-amber-900 dark:text-amber-100 transition-colors duration-300">
                             {element.discoveredYear > 0 ? element.discoveredYear : `${Math.abs(element.discoveredYear)} BCE`}
                           </span>
                         </div>
@@ -316,7 +316,7 @@ const ElementCard = memo(({ element }: ElementCardProps) => {
                 <Separator />
                 
                 <Button 
-                  className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                  className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 dark:from-blue-700 dark:to-purple-700 dark:hover:from-blue-800 dark:hover:to-purple-800 transition-all duration-300"
                   size="lg"
                   onClick={() => window.open(`https://en.wikipedia.org/wiki/${element.name}`, '_blank')}
                 >

@@ -1,7 +1,6 @@
 {
-  "/periodic/page": "app/periodic/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
-  "/mixer/page": "app/mixer/page.js",
-  "/favorites/page": "app/favorites/page.js",
-  "/quiz/page": "app/quiz/page.js"
+  "/periodic/page": "app/periodic/page.js",
+  "/mixer/page": "app/mixer/page.js"
 }

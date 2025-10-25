@@ -11,7 +11,8 @@
     "lint:fix": "next lint --fix",
     "type-check": "tsc --noEmit",
     "clean": "rimraf .next out",
-    "reinstall": "rimraf node_modules package-lock.json && npm install"
+    "reinstall": "rimraf node_modules package-lock.json && npm install",
+    "test:testsprite-check": "npx @testsprite/testsprite-mcp@latest --version"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.30.0",

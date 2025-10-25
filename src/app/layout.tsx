@@ -7,7 +7,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import { ThemeProvider } from '@/components/ThemeProvider'
-import VantaBackground from '@/components/VantaBackground'
+import ChemicalBackground from '@/components/ChemicalBackground'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -53,7 +53,7 @@ export default function RootLayout({
         <ThemeProvider>
           <ClerkProvider>
             <ErrorBoundary>
-              <VantaBackground />
+              <ChemicalBackground />
               <div className="relative min-h-screen flex flex-col">
                 {/* Overlay for text contrast over the 3D background */}
                 <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px] z-10 pointer-events-none"></div>

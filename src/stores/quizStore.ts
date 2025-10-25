@@ -2,6 +2,8 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { QuizQuestion, QuizSession, QuizAnswer, QuizSettings, QuizStats, Difficulty, QuizCategory } from '@/types/quiz';
 import { QUIZ_QUESTIONS, DEFAULT_QUIZ_SETTINGS } from '@/constants/quizData';
+import { generateQuizQuestionSafe, validateQuizInputs } from '@/lib/quizUtils';
+import { ELEMENTS } from '@/constants/elements';
 
 interface QuizState {
   questions: QuizQuestion[];
@@ -41,35 +43,97 @@ export const useQuizStore = create<QuizState>()(
       isLoading: false,
 
       startQuiz: (settings: QuizSettings) => {
-        const { questions } = get();
+        try {
+          set({ isLoading: true });
+          
+          // TestSprite Enhancement: Validate inputs before quiz generation
+          const validation = validateQuizInputs(ELEMENTS, settings.difficulty[0] || 'medium');
+          if (!validation.isValid) {
+            console.error('QuizStore: Invalid quiz settings:', validation.error);
+            set({ isLoading: false });
+            return;
+          }
+          
+          const { questions } = get();
+          
+          // Enhanced question generation with fallback to dynamic generation
+          let filteredQuestions = questions.filter(q => 
+            settings.categories.includes(q.category) &&
+            settings.difficulty.includes(q.difficulty)
+          );
+          
+          // TestSprite Enhancement: Generate additional questions if needed
+          const requiredQuestions = settings.numberOfQuestions;
+          if (filteredQuestions.length < requiredQuestions) {
+            console.log(`QuizStore: Need ${requiredQuestions - filteredQuestions.length} more questions, generating dynamically...`);
+            
+            for (let i = filteredQuestions.length; i < requiredQuestions; i++) {
+              const difficultyLevel = settings.difficulty[i % settings.difficulty.length];
+              const generatedQuestion = generateQuizQuestionSafe(ELEMENTS, difficultyLevel);
+              
+              if (generatedQuestion) {
+                filteredQuestions.push(generatedQuestion);
+              } else {
+                console.warn(`QuizStore: Failed to generate question ${i + 1}`);
+                break; // Stop if generation fails
+              }
+            }
+          }
+          
+          // Shuffle if random order is enabled
+          if (settings.randomOrder) {
+            filteredQuestions = filteredQuestions.sort(() => Math.random() - 0.5);
+          }
+          
+          // Limit to requested number of questions
+          filteredQuestions = filteredQuestions.slice(0, settings.numberOfQuestions);
+          
+          // TestSprite Enhancement: Ensure we have valid questions
+          if (filteredQuestions.length === 0) {
+            console.error('QuizStore: No valid questions available for selected settings');
+            set({ isLoading: false });
+            return;
+          }
         
-        // Filter questions based on settings
-        let filteredQuestions = questions.filter(q => 
-          settings.categories.includes(q.category) &&
-          settings.difficulty.includes(q.difficulty)
-        );
-        
-        // Shuffle if random order is enabled
-        if (settings.randomOrder) {
-          filteredQuestions = filteredQuestions.sort(() => Math.random() - 0.5);
+          const session: QuizSession = {
+            id: Date.now().toString(),
+            questions: filteredQuestions,
+            currentQuestionIndex: 0,
+            answers: [],
+            score: 0,
+            startTime: new Date(),
+            timeSpent: 0,
+            completed: false,
+            settings
+          };
+          
+          set({ currentSession: session, isLoading: false });
+          console.log(`QuizStore: Quiz started successfully with ${filteredQuestions.length} questions`);
+          
+        } catch (error) {
+          console.error('QuizStore: Error starting quiz:', error);
+          set({ isLoading: false, currentSession: null });
+          
+          // TestSprite Enhancement: Attempt fallback quiz creation
+          try {
+            console.log('QuizStore: Attempting fallback quiz with minimal settings...');
+            const fallbackSession: QuizSession = {
+              id: `fallback-${Date.now()}`,
+              questions: questions.slice(0, Math.min(5, questions.length)), // Use first 5 questions as fallback
+              currentQuestionIndex: 0,
+              answers: [],
+              score: 0,
+              startTime: new Date(),
+              timeSpent: 0,
+              completed: false,
+              settings: { ...DEFAULT_QUIZ_SETTINGS, numberOfQuestions: Math.min(5, questions.length) }
+            };
+            set({ currentSession: fallbackSession });
+            console.log('QuizStore: Fallback quiz created successfully');
+          } catch (fallbackError) {
+            console.error('QuizStore: Fallback quiz creation also failed:', fallbackError);
+          }
         }
-        
-        // Limit to requested number of questions
-        filteredQuestions = filteredQuestions.slice(0, settings.numberOfQuestions);
-        
-        const session: QuizSession = {
-          id: Date.now().toString(),
-          questions: filteredQuestions,
-          currentQuestionIndex: 0,
-          answers: [],
-          score: 0,
-          startTime: new Date(),
-          timeSpent: 0,
-          completed: false,
-          settings
-        };
-        
-        set({ currentSession: session });
       },
 
       submitAnswer: (answer: QuizAnswer) => {

@@ -78,6 +78,33 @@
     appearance: textfield;
   }
   
+  /* Element grid positioning fix for PeriodicTable */
+  .element-cell, .mini-element-cell {
+    grid-column: var(--grid-column);
+    grid-row: var(--grid-row);
+    background-color: var(--element-color);
+  }
+  
+  /* Difficulty button styles */
+  button[data-selected="true"] {
+    background-color: var(--difficulty-color) !important;
+  }
+  
+  /* Progress bar styles */
+  .progress-bar {
+    width: var(--progress-width);
+  }
+  
+  /* Difficulty badge styles */
+  .difficulty-badge {
+    background-color: var(--difficulty-color);
+  }
+  
+  /* Element symbol styles */
+  .element-symbol {
+    background-color: var(--element-color);
+  }
+  
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-box-orient: vertical;

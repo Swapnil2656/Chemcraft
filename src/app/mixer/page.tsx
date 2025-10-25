@@ -207,8 +207,8 @@ export default function MixerPage() {
                     >
                       <div className="flex items-center space-x-2 md:space-x-3">
                         <div 
-                          className="w-8 h-8 md:w-10 md:h-10 rounded flex items-center justify-center text-white font-bold text-sm md:text-base"
-                          style={{ backgroundColor: element.color }}
+                          className="w-8 h-8 md:w-10 md:h-10 rounded flex items-center justify-center text-white font-bold text-sm md:text-base element-symbol"
+                          style={{ '--element-color': element.color } as React.CSSProperties}
                         >
                           {element.symbol}
                         </div>
