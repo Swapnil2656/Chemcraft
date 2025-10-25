@@ -17,6 +17,10 @@ export interface Compound {
   image?: string;
   learnMore?: string;
   pubchemUrl?: string;
+  confidence?: number;
+  source?: 'database' | 'rules_engine' | 'ml_model' | 'pubchem_api';
+  rule_applied?: string;
+  safety_warnings?: string[];
 }
 
 export interface CompoundElement {
@@ -48,6 +52,10 @@ export interface MixingResult {
   reaction?: ChemicalReaction;
   error?: string;
   suggestions?: string[];
+  confidence?: number;
+  source?: 'database' | 'rules_engine' | 'ml_model' | 'pubchem_api';
+  rule_applied?: string;
+  safety_warnings?: string[];
 }
 
 export interface ChemicalReaction {

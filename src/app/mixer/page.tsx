@@ -9,10 +9,12 @@ const PeriodicTable = dynamic(() => import('@/components/PeriodicTable'), {
   ssr: false
 });
 import { useUser, SignInButton } from '@clerk/nextjs';
-import { Plus, Minus, Zap, RotateCcw, Beaker, AlertCircle } from 'lucide-react';
+import { Plus, Minus, Zap, RotateCcw, Beaker, AlertCircle, Atom, FlaskConical } from 'lucide-react';
 import { useElementStore } from '@/stores/elementStore';
 import { lookupCompound, getElementWikipediaUrl } from '@/lib/compoundLookup';
 import { debounce } from '@/lib/performance';
+import { getReactivePartners, canElementsReact } from '@/data/reactivityData';
+import { chemCraftAI } from '@/lib/chemCraftAI';
 import { Element } from '@/types/element';
 import { MixingResult } from '@/types/compound';
 
@@ -23,8 +25,43 @@ export default function MixerPage() {
   const [selectedElements, setSelectedElements] = useState<{ element: Element; count: number }[]>([]);
   const [mixingResult, setMixingResult] = useState<MixingResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [reactivityMode, setReactivityMode] = useState(false);
+  const [elementForReactivity, setElementForReactivity] = useState<Element | null>(null);
 
   const addElement = (element: Element) => {
+    // Handle reactivity mode selection
+    if (reactivityMode) {
+      if (elementForReactivity?.id === element.id) {
+        // Deselect if clicking the same element - keep Smart Mode active
+        setElementForReactivity(null);
+      } else if (!elementForReactivity) {
+        // First element selection in reactivity mode
+        setElementForReactivity(element);
+      } else {
+        // Second element selection - check if they can react
+        const reactivePartners = getReactivePartners(elementForReactivity.symbol);
+        if (reactivePartners.includes(element.symbol)) {
+          // Elements can react - add both to mixer, keep Smart Mode active
+          addElementToMixer(elementForReactivity);
+          addElementToMixer(element);
+          setElementForReactivity(null); // Clear selection but keep Smart Mode on
+        } else {
+          // Elements cannot react - show feedback and keep Smart Mode active
+          setMixingResult({
+            success: false,
+            error: `${elementForReactivity.name} and ${element.name} do not react under normal conditions.`,
+            suggestions: [`Try selecting a different element that can react with ${elementForReactivity.name}`]
+          });
+          setElementForReactivity(element); // Set new element for next selection
+        }
+      }
+    } else {
+      // Normal mode - just add to mixer
+      addElementToMixer(element);
+    }
+  };
+
+  const addElementToMixer = (element: Element) => {
     const existingIndex = selectedElements.findIndex(item => item.element.id === element.id);
     
     if (existingIndex >= 0) {
@@ -65,6 +102,68 @@ export default function MixerPage() {
     setIsLoading(true);
     
     try {
+      // Use AI prediction with element counts
+      const elementsWithCounts = selectedElements.map(item => ({
+        symbol: item.element.symbol,
+        count: item.count
+      }));
+      
+      try {
+        const aiPrediction = await chemCraftAI.predictCompound(elementsWithCounts);
+        
+        if (aiPrediction.will_react) {
+          const properties = [
+            { name: 'State', value: aiPrediction.properties?.state || 'unknown', unit: '' },
+            { name: 'Type', value: aiPrediction.properties?.type || 'unknown', unit: '' },
+            { name: 'Color', value: aiPrediction.properties?.color || 'unknown', unit: '' }
+          ].filter(prop => prop.value && prop.value !== 'unknown');
+
+          const elementNames = selectedElements.map(item => item.element.name).join('-');
+          
+          setMixingResult({
+            success: true,
+            compound: {
+              id: `compound-${Date.now()}`,
+              name: aiPrediction.name || `${elementNames} compound`,
+              formula: aiPrediction.formula || elementsWithCounts.map(e => `${e.symbol}${e.count > 1 ? e.count : ''}`).join(''),
+              elements: selectedElements.map(item => ({ element: item.element.symbol, count: item.count })),
+              type: 'compound' as any,
+              properties,
+              description: `${aiPrediction.name || 'Predicted compound'} (${aiPrediction.formula || 'Formula predicted'})`,
+              uses: aiPrediction.uses || ['Chemical synthesis', 'Research applications'],
+              phase: aiPrediction.properties?.state || 'unknown' as any,
+              color: aiPrediction.properties?.color || 'unknown',
+              confidence: aiPrediction.confidence,
+              source: aiPrediction.source,
+              rule_applied: aiPrediction.rule_applied,
+              safety_warnings: aiPrediction.warnings
+            }
+          });
+          return;
+        } else {
+          // AI says no reaction
+          const elementNames = selectedElements.map(item => `${item.count > 1 ? item.count + ' ' : ''}${item.element.name}`).join(' + ');
+          
+          setMixingResult({
+            success: false,
+            error: aiPrediction.reason || `${elementNames} do not react under normal conditions.`,
+            suggestions: [
+              'Try using the Smart Mode to find reactive combinations',
+              'Consider different element ratios',
+              'Learn about chemical reactivity patterns',
+              aiPrediction.note || 'Check the periodic table for better combinations'
+            ],
+            confidence: aiPrediction.confidence,
+            source: aiPrediction.source
+          });
+          return;
+        }
+      } catch (aiError) {
+        console.warn('AI prediction failed, falling back to traditional lookup:', aiError);
+        // Continue to fallback
+      }
+
+      // Fallback to traditional compound lookup
       const elementsWithNames = selectedElements.map(item => ({
         symbol: item.element.symbol,
         name: item.element.name
@@ -94,7 +193,8 @@ export default function MixerPage() {
             phase: compoundData.properties.state || 'unknown' as any,
             color: 'unknown',
             learnMore: compoundData.links.wikipedia,
-            pubchemUrl: compoundData.links.pubchem
+            pubchemUrl: compoundData.links.pubchem,
+            source: 'database'
           }
         });
       } else {
@@ -119,6 +219,14 @@ export default function MixerPage() {
 
   const resetMixer = () => {
     setSelectedElements([]);
+    setMixingResult(null);
+    setElementForReactivity(null);
+    // Keep Smart Mode active - don't reset reactivityMode
+  };
+
+  const toggleReactivityMode = () => {
+    setReactivityMode(!reactivityMode);
+    setElementForReactivity(null);
     setMixingResult(null);
   };
 
@@ -158,21 +266,72 @@ export default function MixerPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
         {/* Element Selection */}
-        <div className="xl:col-span-2">
+        <div className="lg:col-span-2">
           <div className="bg-white/10 dark:bg-slate-800/30 backdrop-blur-md rounded-2xl p-3 md:p-4 lg:p-6 border border-white/20 dark:border-slate-200/20 shadow-xl shadow-black/10 transition-all duration-300 ease-in-out">
-            <h2 className="text-xl md:text-2xl font-semibold text-slate-800 dark:text-slate-100 mb-3 md:mb-4 transition-all duration-300 ease-in-out">
-              Select Elements
-            </h2>
-            <div className="w-full bg-white/5 dark:bg-slate-900/20 backdrop-blur-sm rounded-xl p-2 border border-white/10 dark:border-slate-200/10">
-              <PeriodicTable onElementClick={addElement} />
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 md:mb-4">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-slate-800 dark:text-slate-100 transition-all duration-300 ease-in-out">
+                Select Elements
+              </h2>
+              <button
+                onClick={toggleReactivityMode}
+                className={`flex items-center justify-center space-x-2 px-3 py-2 rounded-lg text-sm transition-all duration-300 ${
+                  reactivityMode
+                    ? 'bg-blue-500/20 text-blue-600 dark:text-blue-400 border border-blue-400/30'
+                    : 'bg-white/10 dark:bg-slate-700/50 text-slate-700 dark:text-slate-300 border border-white/20 dark:border-slate-200/20 hover:bg-white/20 dark:hover:bg-slate-600/60'
+                }`}
+              >
+                <Atom className="h-4 w-4" />
+                <span className="hidden xs:inline">Smart Mode</span>
+                <span className="xs:hidden">Smart</span>
+                {reactivityMode && <span className="text-xs hidden sm:inline">(Active)</span>}
+              </button>
             </div>
+            {reactivityMode && (
+              <div className="mb-4 p-3 bg-blue-50/50 dark:bg-blue-900/20 border border-blue-200/30 dark:border-blue-700/30 rounded-lg">
+                <div className="flex items-center space-x-2 mb-2">
+                  <FlaskConical className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                  <span className="text-sm font-medium text-blue-900 dark:text-blue-100">
+                    Smart Reactivity Mode Active
+                  </span>
+                </div>
+                <p className="text-xs text-blue-700 dark:text-blue-300">
+                  {elementForReactivity 
+                    ? `Selected: ${elementForReactivity.name}. Click on a highlighted element to see if they react! Smart Mode stays active.`
+                    : 'Click on an element to see which elements can react with it. Reactive elements will be highlighted in blue. Smart Mode stays on until you turn it off.'
+                  }
+                </p>
+              </div>
+            )}
+            <div className="w-full bg-white/5 dark:bg-slate-900/20 backdrop-blur-sm rounded-xl p-2 border border-white/10 dark:border-slate-200/10">
+              <PeriodicTable 
+                onElementClick={addElement} 
+                selectedElementForReactivity={elementForReactivity}
+                showReactivityHighlighting={reactivityMode}
+              />
+            </div>
+            {reactivityMode && (
+              <div className="mt-4 grid grid-cols-1 xs:grid-cols-3 gap-2 text-xs">
+                <div className="flex items-center space-x-2 p-2 bg-yellow-50/50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200/30 dark:border-yellow-700/30">
+                  <div className="w-3 h-3 sm:w-4 sm:h-4 bg-yellow-400 rounded ring-1 sm:ring-2 ring-yellow-400 shadow-sm flex-shrink-0"></div>
+                  <span className="text-yellow-800 dark:text-yellow-200 text-xs">Selected</span>
+                </div>
+                <div className="flex items-center space-x-2 p-2 bg-blue-50/50 dark:bg-blue-900/20 rounded-lg border border-blue-200/30 dark:border-blue-700/30">
+                  <div className="w-3 h-3 sm:w-4 sm:h-4 bg-blue-400 rounded ring-1 sm:ring-2 ring-blue-400 shadow-sm animate-pulse flex-shrink-0"></div>
+                  <span className="text-blue-800 dark:text-blue-200 text-xs">Can React</span>
+                </div>
+                <div className="flex items-center space-x-2 p-2 bg-gray-50/50 dark:bg-gray-900/20 rounded-lg border border-gray-200/30 dark:border-gray-700/30">
+                  <div className="w-3 h-3 sm:w-4 sm:h-4 bg-gray-400 rounded opacity-40 flex-shrink-0"></div>
+                  <span className="text-gray-600 dark:text-gray-400 text-xs">Cannot React</span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Mixing Area */}
-        <div className="xl:col-span-1">
+        <div className="lg:col-span-1">
           <div className="bg-white/10 dark:bg-slate-800/30 backdrop-blur-md rounded-2xl p-3 md:p-4 lg:p-6 border border-white/20 dark:border-slate-200/20 shadow-xl shadow-black/10 transition-all duration-300 ease-in-out">
             <div className="flex items-center justify-between mb-4 md:mb-6">
               <h2 className="text-xl md:text-2xl font-semibold text-slate-800 dark:text-slate-100 transition-all duration-300 ease-in-out">
@@ -206,11 +365,22 @@ export default function MixerPage() {
                       className="flex items-center justify-between p-2 md:p-3 bg-gray-50 dark:bg-slate-700 rounded-lg transition-colors duration-300"
                     >
                       <div className="flex items-center space-x-2 md:space-x-3">
-                        <div 
-                          className="w-8 h-8 md:w-10 md:h-10 rounded flex items-center justify-center text-white font-bold text-sm md:text-base element-symbol"
-                          style={{ '--element-color': element.color } as React.CSSProperties}
-                        >
-                          {element.symbol}
+                        <div className="relative">
+                          <div 
+                            className="w-8 h-8 md:w-10 md:h-10 rounded flex items-center justify-center text-white font-bold text-sm md:text-base"
+                            style={{ backgroundColor: element.color }}
+                          >
+                            {element.symbol}
+                          </div>
+                          {reactivityMode && selectedElements.length > 1 && (
+                            <div className="absolute -top-1 -right-1">
+                              {canElementsReact(element.symbol, selectedElements.find(el => el.element.id !== element.id)?.element.symbol || '') ? (
+                                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" title="Can react" />
+                              ) : (
+                                <div className="w-3 h-3 bg-red-500 rounded-full" title="Cannot react" />
+                              )}
+                            </div>
+                          )}
                         </div>
                         <div>
                           <div className="font-medium text-gray-900 dark:text-slate-100 text-sm md:text-base transition-colors duration-300">
@@ -288,22 +458,57 @@ export default function MixerPage() {
                   <div className="space-y-4">
                     {mixingResult.compound && (
                       <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3 md:p-4 transition-colors duration-300">
-                        <div className="flex items-center space-x-2 mb-2 md:mb-3">
-                          <div className="w-6 h-6 md:w-8 md:h-8 bg-green-500 rounded-full flex items-center justify-center">
-                            <Beaker className="h-3 w-3 md:h-5 md:w-5 text-white" />
+                        <div className="flex items-center justify-between mb-2 md:mb-3">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-6 h-6 md:w-8 md:h-8 bg-green-500 rounded-full flex items-center justify-center">
+                              <Beaker className="h-3 w-3 md:h-5 md:w-5 text-white" />
+                            </div>
+                            <div>
+                              <h4 className="text-base md:text-lg font-semibold text-green-900 dark:text-green-100 transition-colors duration-300">
+                                {mixingResult.compound.name}
+                              </h4>
+                              <p className="text-green-700 dark:text-green-300 font-mono text-sm md:text-base transition-colors duration-300">
+                                {mixingResult.compound.formula}
+                              </p>
+                            </div>
                           </div>
-                          <div>
-                            <h4 className="text-base md:text-lg font-semibold text-green-900 dark:text-green-100 transition-colors duration-300">
-                              {mixingResult.compound.name}
-                            </h4>
-                            <p className="text-green-700 dark:text-green-300 font-mono text-sm md:text-base transition-colors duration-300">
-                              {mixingResult.compound.formula}
-                            </p>
-                          </div>
+                          {(mixingResult.compound.confidence || mixingResult.compound.source) && (
+                            <div className="text-right">
+                              {mixingResult.compound.confidence && (
+                                <div className="text-xs text-green-600 dark:text-green-400">
+                                  {Math.round(mixingResult.compound.confidence * 100)}% confidence
+                                </div>
+                              )}
+                              {mixingResult.compound.source && (
+                                <div className="text-xs text-green-500 dark:text-green-500 capitalize">
+                                  {mixingResult.compound.source.replace('_', ' ')}
+                                </div>
+                              )}
+                            </div>
+                          )}
                         </div>
                         <p className="text-green-800 dark:text-green-200 mb-2 md:mb-3 text-sm md:text-base transition-colors duration-300">
                           {mixingResult.compound.description}
                         </p>
+                        {mixingResult.compound.rule_applied && (
+                          <div className="mb-3 p-2 bg-blue-50/50 dark:bg-blue-900/20 border border-blue-200/30 dark:border-blue-700/30 rounded">
+                            <div className="text-xs text-blue-700 dark:text-blue-300">
+                              <strong>AI Rule Applied:</strong> {mixingResult.compound.rule_applied}
+                            </div>
+                          </div>
+                        )}
+                        {mixingResult.compound.safety_warnings && mixingResult.compound.safety_warnings.length > 0 && (
+                          <div className="mb-3 p-2 bg-red-50/50 dark:bg-red-900/20 border border-red-200/30 dark:border-red-700/30 rounded">
+                            <div className="text-xs text-red-700 dark:text-red-300">
+                              <strong>Safety Warnings:</strong>
+                              <ul className="list-disc list-inside mt-1">
+                                {mixingResult.compound.safety_warnings.map((warning, idx) => (
+                                  <li key={idx}>{warning}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
+                        )}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-4 text-xs md:text-sm mb-3 md:mb-4">
                           <div>
                             <strong>Formula:</strong> <span className="font-mono">{mixingResult.compound.formula}</span>
@@ -373,11 +578,27 @@ export default function MixerPage() {
                   </div>
                 ) : (
                   <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 transition-colors duration-300">
-                    <div className="flex items-center space-x-2 mb-3">
-                      <AlertCircle className="h-5 w-5 text-red-500 dark:text-red-400" />
-                      <h4 className="text-lg font-semibold text-red-900 dark:text-red-100 transition-colors duration-300">
-                        Mixing Failed
-                      </h4>
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center space-x-2">
+                        <AlertCircle className="h-5 w-5 text-red-500 dark:text-red-400" />
+                        <h4 className="text-lg font-semibold text-red-900 dark:text-red-100 transition-colors duration-300">
+                          Mixing Failed
+                        </h4>
+                      </div>
+                      {(mixingResult.confidence || mixingResult.source) && (
+                        <div className="text-right">
+                          {mixingResult.confidence && (
+                            <div className="text-xs text-red-600 dark:text-red-400">
+                              {Math.round(mixingResult.confidence * 100)}% confidence
+                            </div>
+                          )}
+                          {mixingResult.source && (
+                            <div className="text-xs text-red-500 dark:text-red-500 capitalize">
+                              {mixingResult.source.replace('_', ' ')}
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                     <p className="text-red-800 dark:text-red-200 mb-3 transition-colors duration-300">
                       {mixingResult.error}
@@ -398,6 +619,51 @@ export default function MixerPage() {
                 )}
               </div>
             )}
+          </div>
+        </div>
+      </div>
+
+      {/* Educational Section */}
+      <div className="mt-8">
+        <div className="bg-white/10 dark:bg-slate-800/30 backdrop-blur-md rounded-2xl p-6 border border-white/20 dark:border-slate-200/20 shadow-xl shadow-black/10">
+          <h2 className="text-2xl font-semibold text-slate-800 dark:text-slate-100 mb-4">
+            How Smart Mode Works
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+            <div className="p-3 sm:p-4 bg-blue-50/50 dark:bg-blue-900/20 rounded-lg border border-blue-200/30 dark:border-blue-700/30">
+              <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2 text-sm sm:text-base">Highly Reactive Elements</h3>
+              <p className="text-blue-700 dark:text-blue-300 text-xs mb-2">
+                Alkali metals (Na, K, Li) and halogens (F, Cl, Br, I) react with many elements.
+              </p>
+              <div className="flex flex-wrap gap-1">
+                <span className="px-2 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200 rounded text-xs">Na</span>
+                <span className="px-2 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200 rounded text-xs">Cl</span>
+                <span className="px-2 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200 rounded text-xs">F</span>
+              </div>
+            </div>
+            
+            <div className="p-3 sm:p-4 bg-green-50/50 dark:bg-green-900/20 rounded-lg border border-green-200/30 dark:border-green-700/30">
+              <h3 className="font-semibold text-green-900 dark:text-green-100 mb-2 text-sm sm:text-base">Common Reactions</h3>
+              <p className="text-green-700 dark:text-green-300 text-xs mb-2">
+                Hydrogen + Oxygen → Water, Sodium + Chlorine → Salt
+              </p>
+              <div className="text-xs font-mono text-green-600 dark:text-green-400 space-y-1">
+                <div>H + O → H₂O</div>
+                <div>Na + Cl → NaCl</div>
+              </div>
+            </div>
+            
+            <div className="p-3 sm:p-4 bg-gray-50/50 dark:bg-gray-900/20 rounded-lg border border-gray-200/30 dark:border-gray-700/30 sm:col-span-2 lg:col-span-1">
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2 text-sm sm:text-base">Noble Gases</h3>
+              <p className="text-gray-700 dark:text-gray-300 text-xs mb-2">
+                He, Ne, Ar, Kr, Xe, Rn rarely react due to stable electron configuration.
+              </p>
+              <div className="flex flex-wrap gap-1">
+                <span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded text-xs">He</span>
+                <span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded text-xs">Ne</span>
+                <span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded text-xs">Ar</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

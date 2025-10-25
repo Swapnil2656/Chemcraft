@@ -4,14 +4,18 @@ import { QuizQuestion, QuizSession, QuizAnswer, QuizSettings, QuizStats, Difficu
 import { QUIZ_QUESTIONS, DEFAULT_QUIZ_SETTINGS } from '@/constants/quizData';
 import { generateQuizQuestionSafe, validateQuizInputs } from '@/lib/quizUtils';
 import { ELEMENTS } from '@/constants/elements';
+import { loadEnhancedQuizData } from '@/lib/enhancedQuizLoader';
 
 interface QuizState {
   questions: QuizQuestion[];
+  enhancedQuestions: QuizQuestion[];
   currentSession: QuizSession | null;
   stats: QuizStats;
   isLoading: boolean;
+  isEnhancedLoaded: boolean;
   
   // Actions
+  loadEnhancedQuestions: () => Promise<void>;
   startQuiz: (settings: QuizSettings) => void;
   submitAnswer: (answer: QuizAnswer) => void;
   nextQuestion: () => void;
@@ -38,26 +42,48 @@ export const useQuizStore = create<QuizState>()(
   persist(
     (set, get) => ({
       questions: QUIZ_QUESTIONS,
+      enhancedQuestions: [],
       currentSession: null,
       stats: initialStats,
       isLoading: false,
+      isEnhancedLoaded: false,
+
+      loadEnhancedQuestions: async () => {
+        try {
+          set({ isLoading: true });
+          const enhancedQuestions = await loadEnhancedQuizData();
+          console.log(`QuizStore: Loaded ${enhancedQuestions.length} enhanced questions`);
+          set({ 
+            enhancedQuestions, 
+            isEnhancedLoaded: true, 
+            isLoading: false 
+          });
+        } catch (error) {
+          console.error('QuizStore: Failed to load enhanced questions:', error);
+          set({ isLoading: false });
+        }
+      },
 
       startQuiz: (settings: QuizSettings) => {
         try {
           set({ isLoading: true });
           
           // TestSprite Enhancement: Validate inputs before quiz generation
-          const validation = validateQuizInputs(ELEMENTS, settings.difficulty[0] || 'medium');
+          const validation = validateQuizInputs(ELEMENTS, (settings.difficulty[0] || 'medium') as "easy" | "medium" | "hard");
           if (!validation.isValid) {
             console.error('QuizStore: Invalid quiz settings:', validation.error);
             set({ isLoading: false });
             return;
           }
           
-          const { questions } = get();
+          const { questions, enhancedQuestions } = get();
+          
+          // Combine original and enhanced questions
+          const allQuestions = [...questions, ...enhancedQuestions];
+          console.log(`QuizStore: Using ${allQuestions.length} total questions (${questions.length} original + ${enhancedQuestions.length} enhanced)`);
           
           // Enhanced question generation with fallback to dynamic generation
-          let filteredQuestions = questions.filter(q => 
+          let filteredQuestions = allQuestions.filter(q => 
             settings.categories.includes(q.category) &&
             settings.difficulty.includes(q.difficulty)
           );
@@ -68,7 +94,7 @@ export const useQuizStore = create<QuizState>()(
             console.log(`QuizStore: Need ${requiredQuestions - filteredQuestions.length} more questions, generating dynamically...`);
             
             for (let i = filteredQuestions.length; i < requiredQuestions; i++) {
-              const difficultyLevel = settings.difficulty[i % settings.difficulty.length];
+              const difficultyLevel = settings.difficulty[i % settings.difficulty.length] as "easy" | "medium" | "hard";
               const generatedQuestion = generateQuizQuestionSafe(ELEMENTS, difficultyLevel);
               
               if (generatedQuestion) {
@@ -117,16 +143,17 @@ export const useQuizStore = create<QuizState>()(
           // TestSprite Enhancement: Attempt fallback quiz creation
           try {
             console.log('QuizStore: Attempting fallback quiz with minimal settings...');
+            const { questions: fallbackQuestions } = get();
             const fallbackSession: QuizSession = {
               id: `fallback-${Date.now()}`,
-              questions: questions.slice(0, Math.min(5, questions.length)), // Use first 5 questions as fallback
+              questions: fallbackQuestions.slice(0, Math.min(5, fallbackQuestions.length)), // Use first 5 questions as fallback
               currentQuestionIndex: 0,
               answers: [],
               score: 0,
               startTime: new Date(),
               timeSpent: 0,
               completed: false,
-              settings: { ...DEFAULT_QUIZ_SETTINGS, numberOfQuestions: Math.min(5, questions.length) }
+              settings: { ...DEFAULT_QUIZ_SETTINGS, numberOfQuestions: Math.min(5, fallbackQuestions.length) }
             };
             set({ currentSession: fallbackSession });
             console.log('QuizStore: Fallback quiz created successfully');
@@ -189,13 +216,15 @@ export const useQuizStore = create<QuizState>()(
       },
 
       getQuestionsByCategory: (category: QuizCategory) => {
-        const { questions } = get();
-        return questions.filter(q => q.category === category);
+        const { questions, enhancedQuestions } = get();
+        const allQuestions = [...questions, ...enhancedQuestions];
+        return allQuestions.filter(q => q.category === category);
       },
 
       getQuestionsByDifficulty: (difficulty: Difficulty) => {
-        const { questions } = get();
-        return questions.filter(q => q.difficulty === difficulty);
+        const { questions, enhancedQuestions } = get();
+        const allQuestions = [...questions, ...enhancedQuestions];
+        return allQuestions.filter(q => q.difficulty === difficulty);
       },
 
       updateStats: (session: QuizSession) => {

@@ -20,7 +20,9 @@ export enum QuestionType {
   NUMERIC = 'numeric',
   DRAG_DROP = 'drag-drop',
   ELEMENT_IDENTIFICATION = 'element-identification',
-  COMPOUND_FORMATION = 'compound-formation'
+  COMPOUND_FORMATION = 'compound-formation',
+  MATCH_PAIR = 'match-pair',
+  REACTION_PREDICTION = 'reaction-prediction'
 }
 
 export enum Difficulty {

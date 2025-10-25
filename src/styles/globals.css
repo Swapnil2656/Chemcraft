@@ -117,6 +117,7 @@
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -132,6 +133,10 @@
   background: #555;
 }
 
+::-webkit-scrollbar-corner {
+  background: #f1f1f1;
+}
+
 /* Dark mode scrollbar */
 .dark ::-webkit-scrollbar-track {
   background: #2d3748;
@@ -145,40 +150,195 @@
   background: #718096;
 }
 
+.dark ::-webkit-scrollbar-corner {
+  background: #2d3748;
+}
+
+/* Thin scrollbar for mobile */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+}
+
 /* Periodic table specific styles */
 .periodic-table-grid {
   display: grid;
-  grid-template-columns: repeat(18, minmax(40px, 1fr));
-  grid-template-rows: repeat(10, minmax(40px, auto));
-  gap: 2px;
-  padding: 10px;
+  grid-template-columns: repeat(18, minmax(20px, 1fr));
+  grid-template-rows: repeat(10, minmax(20px, auto));
+  gap: 1px;
+  padding: 4px;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  border-radius: 8px;
   width: 100%;
-  max-width: 1200px;
   margin: 0 auto;
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 475px) {
+  .periodic-table-grid {
+    grid-template-columns: repeat(18, minmax(16px, 1fr));
+    grid-template-rows: repeat(10, minmax(16px, auto));
+    gap: 0.5px;
+    padding: 2px;
+    font-size: 0.45rem;
+  }
+}
+
+@media (min-width: 476px) and (max-width: 640px) {
+  .periodic-table-grid {
+    grid-template-columns: repeat(18, minmax(20px, 1fr));
+    grid-template-rows: repeat(10, minmax(20px, auto));
+    gap: 1px;
+    padding: 3px;
+    font-size: 0.5rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .periodic-table-grid {
+    grid-template-columns: repeat(18, minmax(25px, 1fr));
+    grid-template-rows: repeat(10, minmax(25px, auto));
+    gap: 1px;
+    padding: 6px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .periodic-table-grid {
+    grid-template-columns: repeat(18, minmax(35px, 1fr));
+    grid-template-rows: repeat(10, minmax(35px, auto));
+    gap: 2px;
+    padding: 8px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .periodic-table-grid {
+    grid-template-columns: repeat(18, minmax(45px, 1fr));
+    grid-template-rows: repeat(10, minmax(45px, auto));
+    gap: 2px;
+    padding: 10px;
+    max-width: 1200px;
+  }
 }
 
 .element-cell {
   aspect-ratio: 1;
-  min-height: 40px;
-  min-width: 40px;
+  min-height: 18px;
+  min-width: 18px;
   box-sizing: border-box;
-  font-size: 0.65rem;
-  border-radius: 4px;
+  font-size: 0.5rem;
+  border-radius: 3px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2px;
+  padding: 1px;
   text-align: center;
   color: white;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  line-height: 1;
+}
+
+/* Responsive font sizes for element cells */
+@media (max-width: 475px) {
+  .element-cell {
+    min-height: 16px;
+    min-width: 16px;
+    font-size: 0.4rem;
+    padding: 0.5px;
+    border-radius: 2px;
+    border-width: 0.5px;
+  }
+  
+  .element-cell .text-xs {
+    font-size: 0.3rem;
+    line-height: 1;
+  }
+  
+  .element-cell .text-sm {
+    font-size: 0.4rem;
+    line-height: 1;
+  }
+}
+
+@media (min-width: 476px) and (max-width: 640px) {
+  .element-cell {
+    min-height: 20px;
+    min-width: 20px;
+    font-size: 0.45rem;
+    padding: 1px;
+    border-radius: 2px;
+  }
+  
+  .element-cell .text-xs {
+    font-size: 0.35rem;
+  }
+  
+  .element-cell .text-sm {
+    font-size: 0.45rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .element-cell {
+    min-height: 25px;
+    min-width: 25px;
+    font-size: 0.55rem;
+    padding: 1px;
+  }
+  
+  .element-cell .text-xs {
+    font-size: 0.45rem;
+  }
+  
+  .element-cell .text-sm {
+    font-size: 0.55rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .element-cell {
+    min-height: 35px;
+    min-width: 35px;
+    font-size: 0.625rem;
+    padding: 2px;
+  }
+  
+  .element-cell .text-xs {
+    font-size: 0.55rem;
+  }
+  
+  .element-cell .text-sm {
+    font-size: 0.625rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  .element-cell {
+    min-height: 45px;
+    min-width: 45px;
+    font-size: 0.75rem;
+    padding: 2px;
+    border-radius: 4px;
+  }
+  
+  .element-cell .text-xs {
+    font-size: 0.65rem;
+  }
+  
+  .element-cell .text-sm {
+    font-size: 0.75rem;
+  }
 }
 
 .element-cell:hover {
@@ -190,34 +350,107 @@
 .lanthanide-placeholder {
   grid-column: 3;
   grid-row: 6;
-  min-height: 40px;
+  min-height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #6b7280;
-  font-size: 0.75rem;
+  font-size: 0.45rem;
   font-weight: 500;
   background-color: #f3f4f6;
   border: 1px dashed #d1d5db;
-  border-radius: 0.25rem;
+  border-radius: 0.125rem;
 }
 
 .actinide-placeholder {
   grid-column: 3;
   grid-row: 7;
-  min-height: 40px;
+  min-height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #6b7280;
-  font-size: 0.75rem;
+  font-size: 0.45rem;
   font-weight: 500;
   background-color: #f3f4f6;
   border: 1px dashed #d1d5db;
-  border-radius: 0.25rem;
+  border-radius: 0.125rem;
+}
+
+/* Responsive placeholder adjustments */
+@media (max-width: 475px) {
+  .lanthanide-placeholder,
+  .actinide-placeholder {
+    min-height: 16px;
+    font-size: 0.3rem;
+    border-width: 0.5px;
+  }
+}
+
+@media (min-width: 476px) and (max-width: 640px) {
+  .lanthanide-placeholder,
+  .actinide-placeholder {
+    min-height: 20px;
+    font-size: 0.35rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .lanthanide-placeholder,
+  .actinide-placeholder {
+    min-height: 25px;
+    font-size: 0.5rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .lanthanide-placeholder,
+  .actinide-placeholder {
+    min-height: 35px;
+    font-size: 0.625rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  .lanthanide-placeholder,
+  .actinide-placeholder {
+    min-height: 45px;
+    font-size: 0.75rem;
+    border-radius: 0.25rem;
+  }
 }
 
 
+
+/* Reactivity highlighting animations */
+@keyframes reactivity-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.8), 0 0 30px rgba(59, 130, 246, 0.4);
+  }
+}
+
+.element-cell.reactive-partner {
+  animation: reactivity-pulse 2s infinite, glow 2s infinite;
+}
+
+.element-cell.selected-for-reactivity {
+  animation: glow 1.5s infinite;
+  box-shadow: 0 0 15px rgba(250, 204, 21, 0.6);
+}
 
 /* Element category colors */
 .category-alkali-metals {

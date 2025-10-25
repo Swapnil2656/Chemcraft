@@ -11,7 +11,7 @@ const path = require('path');
 
 const API_KEY = "sk-user-2ayue2VHZKHXAB9E3EnKTggEcGpcsNYeCGMikw-grOYgHdLORLh2HxnVegXZ-4zLoqxkq5DxCkp9J_54eYrEMuYSH6hgQFYM-uyjSEQojEMUYaO4LfJTMRmaGMwTy0IgJmo";
 const PROJECT_PATH = __dirname;
-const LOCAL_PORT = 3002;
+const LOCAL_PORT = 3001;
 
 console.log('🚀 Starting TestSprite Comprehensive Testing for ChemCraft');
 console.log('='.repeat(60));

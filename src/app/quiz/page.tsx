@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useUser, SignInButton } from '@clerk/nextjs';
-import { Play, Trophy, Clock, BookOpen, Star, Target } from 'lucide-react';
+import { Play, Trophy, Clock, BookOpen, Star, Target, Database } from 'lucide-react';
 import { useQuizStore } from '@/stores/quizStore';
 import { QuizSettings, Difficulty, QuizCategory, QuestionType } from '@/types/quiz';
 import { DEFAULT_QUIZ_SETTINGS, QUIZ_CATEGORIES_INFO, DIFFICULTY_SETTINGS } from '@/constants/quizData';
@@ -10,9 +10,16 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 
 export default function QuizPage() {
   const { isSignedIn, isLoaded } = useUser();
-  const { currentSession, stats, startQuiz } = useQuizStore();
+  const { currentSession, stats, startQuiz, loadEnhancedQuestions, isEnhancedLoaded, enhancedQuestions } = useQuizStore();
   const [settings, setSettings] = useState<QuizSettings>(DEFAULT_QUIZ_SETTINGS);
   const [showSettings, setShowSettings] = useState(false);
+
+  // Load enhanced questions on component mount
+  useEffect(() => {
+    if (!isEnhancedLoaded) {
+      loadEnhancedQuestions();
+    }
+  }, [isEnhancedLoaded, loadEnhancedQuestions]);
 
   const handleStartQuiz = () => {
     startQuiz(settings);
@@ -130,6 +137,16 @@ export default function QuizPage() {
                 </div>
                 <span className="font-semibold text-gray-900 dark:text-slate-100 transition-colors duration-300">
                   {stats.streak}
+                </span>
+              </div>
+              
+              <div className="flex items-center justify-between border-t border-gray-200 dark:border-slate-600 pt-4 mt-4">
+                <div className="flex items-center space-x-2">
+                  <Database className="h-5 w-5 text-blue-500" />
+                  <span className="text-gray-700 dark:text-slate-300 transition-colors duration-300">Enhanced Questions</span>
+                </div>
+                <span className="font-semibold text-gray-900 dark:text-slate-100 transition-colors duration-300">
+                  {isEnhancedLoaded ? `${enhancedQuestions.length} loaded` : 'Loading...'}
                 </span>
               </div>
             </div>
@@ -301,7 +318,7 @@ export default function QuizPage() {
               </div>
             )}
 
-            <div className="mt-6">
+            <div className="mt-6 space-y-3">
               <button
                 onClick={handleStartQuiz}
                 className="w-full flex items-center justify-center space-x-2 py-3 bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600 text-white rounded-lg font-semibold transition-colors duration-300"
@@ -309,6 +326,12 @@ export default function QuizPage() {
                 <Play className="h-5 w-5" />
                 <span>Start Quiz</span>
               </button>
+              
+              {isEnhancedLoaded && enhancedQuestions.length > 0 && (
+                <div className="text-center text-sm text-gray-600 dark:text-slate-400">
+                  Enhanced with {enhancedQuestions.length} additional chemistry questions
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -418,7 +441,9 @@ function QuizSession() {
           </h2>
 
           <div className="space-y-3 mb-6">
-            {currentQuestion.type === QuestionType.MULTIPLE_CHOICE && currentQuestion.options?.map((option, index) => (
+            {(currentQuestion.type === QuestionType.MULTIPLE_CHOICE || 
+              currentQuestion.type === QuestionType.REACTION_PREDICTION) && 
+              currentQuestion.options?.map((option, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedAnswer(option)}
@@ -430,6 +455,21 @@ function QuizSession() {
                 } ${showExplanation ? 'cursor-not-allowed' : 'cursor-pointer'}`}
               >
                 {option}
+              </button>
+            ))}
+            
+            {currentQuestion.type === QuestionType.MATCH_PAIR && currentQuestion.options?.map((option, index) => (
+              <button
+                key={index}
+                onClick={() => setSelectedAnswer(option)}
+                disabled={showExplanation}
+                className={`w-full p-3 text-left rounded-lg border-2 text-gray-900 dark:text-slate-100 transition-colors duration-300 ${
+                  selectedAnswer === option
+                    ? 'border-green-500 dark:border-green-400 bg-green-50 dark:bg-green-900/30'
+                    : 'border-gray-200 dark:border-slate-600 hover:border-gray-300 dark:hover:border-slate-500 bg-white dark:bg-slate-800'
+                } ${showExplanation ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+              >
+                <div className="text-sm font-medium">{option}</div>
               </button>
             ))}
             
