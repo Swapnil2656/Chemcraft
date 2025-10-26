@@ -1,5 +1,7 @@
 {
+  "/periodic/page": "app/periodic/page.js",
   "/page": "app/page.js",
   "/mixer/page": "app/mixer/page.js",
-  "/quiz/page": "app/quiz/page.js"
+  "/quiz/page": "app/quiz/page.js",
+  "/favorites/page": "app/favorites/page.js"
 }
