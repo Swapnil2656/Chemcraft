@@ -1,48 +1,46 @@
 {
   "..\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\ClerkProvider.js -> ./keyless-creator-reader.js": {
-    "id": "..\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\ClerkProvider.js -> ./keyless-creator-reader.js",
+    "id": 3868,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_clerk_nextjs_dist_esm_app-router_client_keyless-creator-reader_js.js"
+      "static/chunks/868.61408b41094864c4.js"
     ]
   },
   "..\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\keyless-cookie-sync.js -> ../keyless-actions.js": {
-    "id": "..\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\keyless-cookie-sync.js -> ../keyless-actions.js",
+    "id": 7667,
     "files": []
   },
   "app\\mixer\\page.tsx -> @/components/PeriodicTable": {
-    "id": "app\\mixer\\page.tsx -> @/components/PeriodicTable",
+    "id": 5640,
     "files": [
-      "static/chunks/_app-pages-browser_src_components_PeriodicTable_tsx-_ae5e1.js"
+      "static/chunks/772.86a8208ecdf87e8f.js"
     ]
   },
   "app\\mixer\\page.tsx -> @/data/reactivityData": {
-    "id": "app\\mixer\\page.tsx -> @/data/reactivityData",
-    "files": [
-      "static/chunks/_app-pages-browser_src_data_reactivityData_ts.js"
-    ]
+    "id": 7981,
+    "files": []
   },
   "app\\mixer\\page.tsx -> @/lib/chemCraftAI": {
-    "id": "app\\mixer\\page.tsx -> @/lib/chemCraftAI",
+    "id": 6377,
     "files": [
-      "static/chunks/_app-pages-browser_src_lib_chemCraftAI_ts.js"
+      "static/chunks/377.709182c2315ef5e1.js"
     ]
   },
   "app\\mixer\\page.tsx -> @/lib/compoundLookup": {
-    "id": "app\\mixer\\page.tsx -> @/lib/compoundLookup",
+    "id": 4829,
     "files": [
-      "static/chunks/_app-pages-browser_src_lib_compoundLookup_ts.js"
+      "static/chunks/829.75821daf36748a1d.js"
     ]
   },
   "app\\mixer\\page.tsx -> @/lib/performance": {
-    "id": "app\\mixer\\page.tsx -> @/lib/performance",
+    "id": 7899,
     "files": [
-      "static/chunks/_app-pages-browser_src_lib_performance_ts.js"
+      "static/chunks/134.16476d579aff5ab5.js"
     ]
   },
   "app\\periodic\\page.tsx -> @/components/PeriodicTable": {
-    "id": "app\\periodic\\page.tsx -> @/components/PeriodicTable",
+    "id": 5640,
     "files": [
-      "static/chunks/_app-pages-browser_src_components_PeriodicTable_tsx-_ae5e0.js"
+      "static/chunks/640.5e118a56445494d3.js"
     ]
   }
 }

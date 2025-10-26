@@ -7,6 +7,7 @@ import { Plus, Minus, Zap, RotateCcw, Beaker, AlertCircle, Atom, FlaskConical } 
 import { useElementStore } from '@/stores/elementStore';
 import { Element } from '@/types/element';
 import { MixingResult } from '@/types/compound';
+import { getReactivePartners, canElementsReact } from '@/data/reactivityData';
 
 // Lazy load PeriodicTable for better performance
 const PeriodicTable = dynamic(() => import('@/components/PeriodicTable'), {
@@ -91,7 +92,7 @@ export default function MixerPage() {
     setSelectedElements(updated);
   };
 
-  const handleMix = debounce(async () => {
+  const handleMix = async () => {
     if (selectedElements.length < 2) {
       setMixingResult({
         success: false,
@@ -111,7 +112,8 @@ export default function MixerPage() {
       }));
       
       try {
-        const aiPrediction = await chemCraftAI.predictCompound(elementsWithCounts);
+        const chemCraftAI = await loadChemCraftAI();
+        const aiPrediction = await chemCraftAI.default.predictCompound(elementsWithCounts);
         
         if (aiPrediction.will_react) {
           const properties = [
@@ -171,7 +173,8 @@ export default function MixerPage() {
         name: item.element.name
       }));
       
-      const compoundData = await lookupCompound(elementsWithNames);
+      const compoundLookupModule = await loadCompoundLookup();
+      const compoundData = await compoundLookupModule.lookupCompound(elementsWithNames);
       
       if (compoundData) {
         const properties = [
@@ -200,7 +203,7 @@ export default function MixerPage() {
           }
         });
       } else {
-        const elementLinks = elementsWithNames.map(el => getElementWikipediaUrl(el.name));
+        const elementLinks = elementsWithNames.map(el => `https://en.wikipedia.org/wiki/${el.name}`);
         setMixingResult({
           success: false,
           error: 'No stable compound known',
@@ -217,7 +220,7 @@ export default function MixerPage() {
     } finally {
       setIsLoading(false);
     }
-  }, 300);
+  };
 
   const resetMixer = () => {
     setSelectedElements([]);
