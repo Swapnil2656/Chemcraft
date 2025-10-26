@@ -1,3 +1,4 @@
 {
+  "/mixer/page": "app/mixer/page.js",
   "/page": "app/page.js"
 }
