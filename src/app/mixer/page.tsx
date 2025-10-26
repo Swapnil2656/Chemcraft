@@ -2,21 +2,23 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
+import { useUser, SignInButton } from '@clerk/nextjs';
+import { Plus, Minus, Zap, RotateCcw, Beaker, AlertCircle, Atom, FlaskConical } from 'lucide-react';
+import { useElementStore } from '@/stores/elementStore';
+import { Element } from '@/types/element';
+import { MixingResult } from '@/types/compound';
 
 // Lazy load PeriodicTable for better performance
 const PeriodicTable = dynamic(() => import('@/components/PeriodicTable'), {
   loading: () => <div className="bg-gray-200 h-96 rounded-lg" />,
   ssr: false
 });
-import { useUser, SignInButton } from '@clerk/nextjs';
-import { Plus, Minus, Zap, RotateCcw, Beaker, AlertCircle, Atom, FlaskConical } from 'lucide-react';
-import { useElementStore } from '@/stores/elementStore';
-import { lookupCompound, getElementWikipediaUrl } from '@/lib/compoundLookup';
-import { debounce } from '@/lib/performance';
-import { getReactivePartners, canElementsReact } from '@/data/reactivityData';
-import { chemCraftAI } from '@/lib/chemCraftAI';
-import { Element } from '@/types/element';
-import { MixingResult } from '@/types/compound';
+
+// Dynamic imports for heavy modules (loaded on demand)
+const loadCompoundLookup = () => import('@/lib/compoundLookup');
+const loadPerformance = () => import('@/lib/performance');
+const loadReactivityData = () => import('@/data/reactivityData');
+const loadChemCraftAI = () => import('@/lib/chemCraftAI');
 
 
 export default function MixerPage() {

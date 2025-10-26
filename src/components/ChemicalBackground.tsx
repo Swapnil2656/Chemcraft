@@ -2,6 +2,12 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 
+// Performance optimization: Only render background on larger screens
+const shouldRenderBackground = () => {
+  if (typeof window === 'undefined') return false;
+  return window.innerWidth > 768; // Only on tablets and desktop
+};
+
 interface Molecule {
   id: number;
   x: number;
@@ -39,6 +45,7 @@ const ChemicalBackground: React.FC = () => {
   const animationRef = useRef<number>();
   const moleculesRef = useRef<Molecule[]>([]);
   const [mounted, setMounted] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
 
   // Initialize molecules
   const initializeMolecules = useCallback((width: number, height: number): Molecule[] => {
@@ -169,10 +176,19 @@ const ChemicalBackground: React.FC = () => {
 
   useEffect(() => {
     setMounted(true);
+    setShouldRender(shouldRenderBackground());
+    
+    // Listen for resize to toggle rendering
+    const handleResize = () => {
+      setShouldRender(shouldRenderBackground());
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
-    if (!mounted || !canvasRef.current) return;
+    if (!mounted || !shouldRender || !canvasRef.current) return;
 
     const canvas = canvasRef.current;
     const updateCanvasSize = () => {
@@ -195,7 +211,7 @@ const ChemicalBackground: React.FC = () => {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [mounted, animate, initializeMolecules]);
+  }, [mounted, shouldRender, animate, initializeMolecules]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -205,6 +221,13 @@ const ChemicalBackground: React.FC = () => {
       }
     };
   }, []);
+
+  // Don't render canvas on mobile for better performance
+  if (!shouldRender) {
+    return (
+      <div className="fixed inset-0 -z-20 w-full h-full bg-gradient-to-br from-slate-900 via-slate-700 to-slate-800" />
+    );
+  }
 
   return (
     <canvas
