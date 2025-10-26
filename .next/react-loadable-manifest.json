@@ -1,26 +1,24 @@
 {
   "..\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\ClerkProvider.js -> ./keyless-creator-reader.js": {
-    "id": "..\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\ClerkProvider.js -> ./keyless-creator-reader.js",
+    "id": 3868,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_clerk_nextjs_dist_esm_app-router_client_keyless-creator-reader_js.js"
+      "static/chunks/868.61408b41094864c4.js"
     ]
   },
   "..\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\keyless-cookie-sync.js -> ../keyless-actions.js": {
-    "id": "..\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\keyless-cookie-sync.js -> ../keyless-actions.js",
-    "files": [
-      "static/chunks/_app-pages-browser_node_modules_clerk_nextjs_dist_esm_app-router_keyless-actions_js.js"
-    ]
+    "id": 7667,
+    "files": []
   },
   "app\\mixer\\page.tsx -> @/components/PeriodicTable": {
-    "id": "app\\mixer\\page.tsx -> @/components/PeriodicTable",
+    "id": 5640,
     "files": [
-      "static/chunks/_app-pages-browser_src_components_PeriodicTable_tsx-_ae5e1.js"
+      "static/chunks/772.f7b85a58c7559fe7.js"
     ]
   },
   "app\\periodic\\page.tsx -> @/components/PeriodicTable": {
-    "id": "app\\periodic\\page.tsx -> @/components/PeriodicTable",
+    "id": 5640,
     "files": [
-      "static/chunks/_app-pages-browser_src_components_PeriodicTable_tsx-_ae5e0.js"
+      "static/chunks/640.f8e342b7ba0a6dc6.js"
     ]
   }
 }
