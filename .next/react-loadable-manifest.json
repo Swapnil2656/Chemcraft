@@ -12,7 +12,7 @@
   "app\\mixer\\page.tsx -> @/components/PeriodicTable": {
     "id": "app\\mixer\\page.tsx -> @/components/PeriodicTable",
     "files": [
-      "static/chunks/_app-pages-browser_src_components_PeriodicTable_tsx.js"
+      "static/chunks/_app-pages-browser_src_components_PeriodicTable_tsx-_ae5e1.js"
     ]
   },
   "app\\mixer\\page.tsx -> @/data/reactivityData": {
@@ -37,6 +37,12 @@
     "id": "app\\mixer\\page.tsx -> @/lib/performance",
     "files": [
       "static/chunks/_app-pages-browser_src_lib_performance_ts.js"
+    ]
+  },
+  "app\\periodic\\page.tsx -> @/components/PeriodicTable": {
+    "id": "app\\periodic\\page.tsx -> @/components/PeriodicTable",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_PeriodicTable_tsx-_ae5e0.js"
     ]
   }
 }
