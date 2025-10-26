@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 
 interface Molecule {
   id: number;
@@ -15,33 +15,33 @@ interface Molecule {
   rotationSpeed: number;
 }
 
+// Chemistry-themed elements with their colors (moved outside component to prevent re-creation)
+const elements = [
+  { symbol: 'H', color: '#FF6B6B', size: 8 },   // Hydrogen - Red
+  { symbol: 'He', color: '#4ECDC4', size: 12 }, // Helium - Teal
+  { symbol: 'C', color: '#45B7D1', size: 16 },  // Carbon - Blue
+  { symbol: 'N', color: '#96CEB4', size: 14 },  // Nitrogen - Green
+  { symbol: 'O', color: '#FFEAA7', size: 14 },  // Oxygen - Yellow
+  { symbol: 'F', color: '#DDA0DD', size: 12 },  // Fluorine - Purple
+  { symbol: 'Ne', color: '#FFB6C1', size: 16 }, // Neon - Pink
+  { symbol: 'Na', color: '#FFA07A', size: 20 }, // Sodium - Orange
+  { symbol: 'Mg', color: '#98FB98', size: 18 }, // Magnesium - Light Green
+  { symbol: 'Al', color: '#F0E68C', size: 18 }, // Aluminum - Khaki
+  { symbol: 'Si', color: '#DEB887', size: 16 }, // Silicon - Tan
+  { symbol: 'P', color: '#F4A460', size: 15 },  // Phosphorus - Sandy Brown
+  { symbol: 'S', color: '#FFFF00', size: 16 },  // Sulfur - Yellow
+  { symbol: 'Cl', color: '#00FF7F', size: 14 }, // Chlorine - Spring Green
+  { symbol: 'Ar', color: '#E6E6FA', size: 18 }, // Argon - Lavender
+];
+
 const ChemicalBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
   const moleculesRef = useRef<Molecule[]>([]);
   const [mounted, setMounted] = useState(false);
 
-  // Chemistry-themed elements with their colors
-  const elements = [
-    { symbol: 'H', color: '#FF6B6B', size: 8 },   // Hydrogen - Red
-    { symbol: 'He', color: '#4ECDC4', size: 12 }, // Helium - Teal
-    { symbol: 'C', color: '#45B7D1', size: 16 },  // Carbon - Blue
-    { symbol: 'N', color: '#96CEB4', size: 14 },  // Nitrogen - Green
-    { symbol: 'O', color: '#FFEAA7', size: 14 },  // Oxygen - Yellow
-    { symbol: 'F', color: '#DDA0DD', size: 12 },  // Fluorine - Purple
-    { symbol: 'Ne', color: '#FFB6C1', size: 16 }, // Neon - Pink
-    { symbol: 'Na', color: '#FFA07A', size: 20 }, // Sodium - Orange
-    { symbol: 'Mg', color: '#98FB98', size: 18 }, // Magnesium - Light Green
-    { symbol: 'Al', color: '#F0E68C', size: 18 }, // Aluminum - Khaki
-    { symbol: 'Si', color: '#DEB887', size: 16 }, // Silicon - Tan
-    { symbol: 'P', color: '#F4A460', size: 15 },  // Phosphorus - Sandy Brown
-    { symbol: 'S', color: '#FFFF00', size: 16 },  // Sulfur - Yellow
-    { symbol: 'Cl', color: '#00FF7F', size: 14 }, // Chlorine - Spring Green
-    { symbol: 'Ar', color: '#E6E6FA', size: 18 }, // Argon - Lavender
-  ];
-
   // Initialize molecules
-  const initializeMolecules = (width: number, height: number): Molecule[] => {
+  const initializeMolecules = useCallback((width: number, height: number): Molecule[] => {
     const molecules: Molecule[] = [];
     const numMolecules = Math.min(25, Math.floor((width * height) / 15000)); // Adaptive count based on screen size
     
@@ -61,7 +61,7 @@ const ChemicalBackground: React.FC = () => {
       });
     }
     return molecules;
-  };
+  }, []);
 
   // Draw a molecule with element symbol
   const drawMolecule = (ctx: CanvasRenderingContext2D, molecule: Molecule) => {
@@ -124,7 +124,7 @@ const ChemicalBackground: React.FC = () => {
   };
 
   // Animation loop
-  const animate = () => {
+  const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     
@@ -165,7 +165,7 @@ const ChemicalBackground: React.FC = () => {
     moleculesRef.current.forEach(drawMolecule.bind(null, ctx));
     
     animationRef.current = requestAnimationFrame(animate);
-  };
+  }, []);
 
   useEffect(() => {
     setMounted(true);
@@ -195,7 +195,7 @@ const ChemicalBackground: React.FC = () => {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [mounted]);
+  }, [mounted, animate, initializeMolecules]);
 
   // Cleanup on unmount
   useEffect(() => {

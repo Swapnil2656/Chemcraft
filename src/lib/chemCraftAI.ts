@@ -665,7 +665,7 @@ class ChemCraftAI {
   private async loadDatabase(): Promise<void> {
     // For now, always use the essential compounds fallback to ensure system works
     // This avoids fetch issues while maintaining full functionality
-    console.log('Loading essential compounds database...');
+    // Loading essential compounds database
     this.loadEssentialCompounds();
     
     // Optional: Try to load full database in background (browser only)
@@ -675,9 +675,9 @@ class ChemCraftAI {
         const fullDatabase = await response.json();
         // Merge with essential compounds
         this.database = { ...this.database, ...fullDatabase };
-        console.log('Full database loaded successfully');
+        // Full database loaded successfully
       } catch (error) {
-        console.log('Full database not available, using essential compounds only');
+        // Full database not available, using essential compounds only
       }
     }
   }
@@ -863,7 +863,7 @@ class ChemCraftAI {
   private async predictCompoundWithCounts(elements: Array<{symbol: string, count: number}>): Promise<CompoundPrediction> {
     // Ensure elements are properly initialized
     if (this.elements.size === 0) {
-      console.log('🔄 Reinitializing elements database...');
+      // Reinitializing elements database
       this.initializeElements();
     }
     
@@ -936,7 +936,7 @@ class ChemCraftAI {
       return '';
     }
     
-    console.log('🧪 Generating formula for elements:', elements);
+    // Generating formula for elements
     
     const formula = elements
       .sort((a, b) => {
@@ -951,7 +951,7 @@ class ChemCraftAI {
       .map(e => e.count === 1 ? e.symbol : `${e.symbol}${e.count}`)
       .join('');
     
-    console.log('📝 Generated formula:', formula);
+    // Generated formula
     return formula;
   }
 
@@ -1003,7 +1003,7 @@ class ChemCraftAI {
     
     // Special case: H2O (water)
     if (formula === 'H2O') {
-      console.log('✅ H2O detected - returning WATER (not hydroxide)');
+      // H2O detected - returning WATER (not hydroxide)
       return {
         will_react: true,
         confidence: 1.0,

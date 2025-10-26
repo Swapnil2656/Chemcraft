@@ -388,7 +388,7 @@ export const generateQuizQuestionSafe = (elements: Element[], difficulty: 'easy'
     
     // Attempt recovery with fallback options
     try {
-      console.log('QuizUtils: Attempting recovery with simplified question...');
+      // Attempting recovery with simplified question
       if (elements.length >= 4) {
         const fallbackElement = elements[0]; // Use first element as fallback
         return {

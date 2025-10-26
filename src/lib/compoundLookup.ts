@@ -40,12 +40,12 @@ export async function lookupCompound(elements: { symbol: string; name: string }[
   
   const lookupKeysArray = Array.from(lookupKeys);
   
-  console.log('Looking up compound for:', elementNames, 'Keys:', lookupKeysArray);
+  // Looking up compound for elements
   
   // Check cache first for any of the keys
   for (const key of lookupKeysArray) {
     if (compoundCache.has(key)) {
-      console.log('Found in cache with key:', key);
+      // Found in cache
       return compoundCache.get(key) || null;
     }
   }
@@ -58,7 +58,7 @@ export async function lookupCompound(elements: { symbol: string; name: string }[
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       compoundsDatabase = await response.json();
-      console.log('Loaded compounds database:', Object.keys(compoundsDatabase || {}));
+      // Loaded compounds database successfully
     } catch (error) {
       console.error('Failed to load compounds database:', error);
       compoundsDatabase = {};
@@ -70,20 +70,20 @@ export async function lookupCompound(elements: { symbol: string; name: string }[
     for (const key of lookupKeysArray) {
       const localCompound = compoundsDatabase[key];
       if (localCompound) {
-        console.log('Found in local database with key:', key, 'compound:', localCompound.name);
+        // Found in local database
         compoundCache.set(sortedNames.join('+'), localCompound);
         return localCompound;
       }
     }
   }
 
-  console.log('Not found in local database, querying PubChem API...');
+  // Not found in local database, querying PubChem API
   
   // Query PubChem API for comprehensive compound database
   try {
     const pubchemCompound = await queryPubChemByElements(elements);
     if (pubchemCompound) {
-      console.log('Found compound via PubChem:', pubchemCompound.name);
+      // Found compound via PubChem
       compoundCache.set(sortedNames.join('+'), pubchemCompound);
       return pubchemCompound;
     }

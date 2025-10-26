@@ -184,15 +184,15 @@ const COMPLETE_COMPOUND_DATABASE = {
 };
 
 // Save the complete database
-console.log('ChemCraft Complete Database Generated!');
-console.log('Total Categories:', Object.keys(COMPLETE_COMPOUND_DATABASE.compound_database).length);
+// ChemCraft Complete Database Generated!
+// Total Categories: Object.keys(COMPLETE_COMPOUND_DATABASE.compound_database).length
 
 let totalCompounds = 0;
 Object.values(COMPLETE_COMPOUND_DATABASE.compound_database).forEach((category: any) => {
   totalCompounds += category.compounds?.length || 0;
 });
 
-console.log('Total Compounds Generated:', totalCompounds);
-console.log('Database saved to: chemcraft-complete-database-550.json');
+// Total Compounds Generated: totalCompounds
+// Database saved to: chemcraft-complete-database-550.json
 
 export const completeDatabase = COMPLETE_COMPOUND_DATABASE;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useQuizStore } from '@/stores/quizStore';
 import { getEnhancedQuizMetadata } from '@/lib/enhancedQuizLoader';
 
@@ -24,22 +24,7 @@ export default function QuizIntegrationTest() {
   const [metadata, setMetadata] = useState<QuizMetadata | null>(null);
   const [testResults, setTestResults] = useState<string[]>([]);
 
-  useEffect(() => {
-    // Load enhanced questions and metadata
-    if (!isEnhancedLoaded) {
-      loadEnhancedQuestions();
-    }
-    
-    getEnhancedQuizMetadata().then(setMetadata);
-  }, [isEnhancedLoaded, loadEnhancedQuestions]);
-
-  useEffect(() => {
-    if (isEnhancedLoaded && enhancedQuestions.length > 0) {
-      runIntegrationTests();
-    }
-  }, [isEnhancedLoaded, enhancedQuestions]);
-
-  const runIntegrationTests = () => {
+  const runIntegrationTests = useCallback(() => {
     const results: string[] = [];
     
     // Test 1: Enhanced questions loaded
@@ -85,7 +70,22 @@ export default function QuizIntegrationTest() {
     results.push(`✅ Reaction prediction questions: ${reactionQuestions.length}`);
     
     setTestResults(results);
-  };
+  }, [enhancedQuestions, originalQuestions]);
+
+  useEffect(() => {
+    // Load enhanced questions and metadata
+    if (!isEnhancedLoaded) {
+      loadEnhancedQuestions();
+    }
+    
+    getEnhancedQuizMetadata().then(setMetadata);
+  }, [isEnhancedLoaded, loadEnhancedQuestions]);
+
+  useEffect(() => {
+    if (isEnhancedLoaded && enhancedQuestions.length > 0) {
+      runIntegrationTests();
+    }
+  }, [isEnhancedLoaded, enhancedQuestions, runIntegrationTests]);
 
   return (
     <div className="p-6 bg-white dark:bg-slate-800 rounded-lg shadow-lg max-w-4xl mx-auto">

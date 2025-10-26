@@ -52,7 +52,7 @@ export const useQuizStore = create<QuizState>()(
         try {
           set({ isLoading: true });
           const enhancedQuestions = await loadEnhancedQuizData();
-          console.log(`QuizStore: Loaded ${enhancedQuestions.length} enhanced questions`);
+          // Loaded enhanced questions successfully
           set({ 
             enhancedQuestions, 
             isEnhancedLoaded: true, 
@@ -80,7 +80,7 @@ export const useQuizStore = create<QuizState>()(
           
           // Combine original and enhanced questions
           const allQuestions = [...questions, ...enhancedQuestions];
-          console.log(`QuizStore: Using ${allQuestions.length} total questions (${questions.length} original + ${enhancedQuestions.length} enhanced)`);
+          // Using combined questions for quiz generation
           
           // Enhanced question generation with fallback to dynamic generation
           let filteredQuestions = allQuestions.filter(q => 
@@ -91,7 +91,7 @@ export const useQuizStore = create<QuizState>()(
           // TestSprite Enhancement: Generate additional questions if needed
           const requiredQuestions = settings.numberOfQuestions;
           if (filteredQuestions.length < requiredQuestions) {
-            console.log(`QuizStore: Need ${requiredQuestions - filteredQuestions.length} more questions, generating dynamically...`);
+            // Generating additional questions dynamically
             
             for (let i = filteredQuestions.length; i < requiredQuestions; i++) {
               const difficultyLevel = settings.difficulty[i % settings.difficulty.length] as "easy" | "medium" | "hard";
@@ -134,7 +134,7 @@ export const useQuizStore = create<QuizState>()(
           };
           
           set({ currentSession: session, isLoading: false });
-          console.log(`QuizStore: Quiz started successfully with ${filteredQuestions.length} questions`);
+          // Quiz started successfully
           
         } catch (error) {
           console.error('QuizStore: Error starting quiz:', error);
@@ -142,7 +142,7 @@ export const useQuizStore = create<QuizState>()(
           
           // TestSprite Enhancement: Attempt fallback quiz creation
           try {
-            console.log('QuizStore: Attempting fallback quiz with minimal settings...');
+            // Attempting fallback quiz with minimal settings
             const { questions: fallbackQuestions } = get();
             const fallbackSession: QuizSession = {
               id: `fallback-${Date.now()}`,
@@ -156,7 +156,7 @@ export const useQuizStore = create<QuizState>()(
               settings: { ...DEFAULT_QUIZ_SETTINGS, numberOfQuestions: Math.min(5, fallbackQuestions.length) }
             };
             set({ currentSession: fallbackSession });
-            console.log('QuizStore: Fallback quiz created successfully');
+            // Fallback quiz created successfully
           } catch (fallbackError) {
             console.error('QuizStore: Fallback quiz creation also failed:', fallbackError);
           }
