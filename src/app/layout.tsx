@@ -3,6 +3,7 @@ import '@/styles/browser-fixes.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
+import Script from 'next/script'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ErrorBoundary from '@/components/ErrorBoundary'
@@ -70,23 +71,24 @@ export default function RootLayout({
             </ErrorBoundary>
           </ClerkProvider>
         </ThemeProvider>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js')
-                    .then(function(registration) {
-                      // Service worker registered successfully
-                    })
-                    .catch(function(registrationError) {
-                      // Service worker registration failed
-                    });
-                });
-              }
-            `
-          }}
-        />
+        <Script 
+          id="service-worker" 
+          strategy="afterInteractive"
+        >
+          {`
+            if ('serviceWorker' in navigator) {
+              window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                  .then(function(registration) {
+                    // Service worker registered successfully
+                  })
+                  .catch(function(registrationError) {
+                    // Service worker registration failed
+                  });
+              });
+            }
+          `}
+        </Script>
       </body>
     </html>
   )
