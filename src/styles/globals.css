@@ -588,7 +588,51 @@
   pointer-events: auto;
 }
 
-/* Responsive design */
+/* Global responsive utilities */
+@media (max-width: 475px) {
+  /* Extra small screens */
+  .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  /* Ensure minimum touch targets */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Optimize text sizes for small screens */
+  h1 { font-size: 1.5rem; line-height: 1.2; }
+  h2 { font-size: 1.25rem; line-height: 1.3; }
+  h3 { font-size: 1.125rem; line-height: 1.4; }
+  
+  /* Reduce padding on small screens */
+  .p-8 { padding: 1rem; }
+  .p-12 { padding: 1.5rem; }
+  .py-20 { padding-top: 3rem; padding-bottom: 3rem; }
+  .py-24 { padding-top: 4rem; padding-bottom: 4rem; }
+}
+
+@media (min-width: 376px) and (max-width: 475px) {
+  /* Small screens */
+  .text-5xl { font-size: 2rem; }
+  .text-4xl { font-size: 1.75rem; }
+  .text-3xl { font-size: 1.5rem; }
+}
+
+/* Add xs breakpoint support */
+@media (min-width: 320px) {
+  .xs\:inline { display: inline; }
+  .xs\:hidden { display: none; }
+  .xs\:block { display: block; }
+  .xs\:flex { display: flex; }
+}
+
+/* Responsive design for periodic table */
 @media (max-width: 1024px) {
   .periodic-table-grid {
     grid-template-columns: repeat(18, minmax(35px, 1fr));
@@ -632,6 +676,26 @@
     min-height: 25px;
     min-width: 25px;
   }
+}
+
+/* Mobile optimization for form elements and interactive components */
+@media (max-width: 640px) {
+  /* Ensure buttons and inputs are touch-friendly */
+  input, button, select, textarea {
+    min-height: 44px;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+  
+  /* Improve modal and dialog sizes */
+  .modal, .dialog {
+    margin: 1rem;
+    max-width: calc(100vw - 2rem);
+  }
+  
+  /* Stack elements vertically on small screens */
+  .sm\:flex-col { flex-direction: column; }
+  .sm\:space-y-2 > * + * { margin-top: 0.5rem; }
+  .sm\:space-y-4 > * + * { margin-top: 1rem; }
 }
 
 /* Print styles */
